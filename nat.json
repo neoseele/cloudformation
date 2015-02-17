@@ -82,6 +82,66 @@
       }
     },
 
+    "NatSecurityGroupIngress1" : {
+      "DependsOn" : ["NatSecurityGroup"],
+      "Type": "AWS::EC2::SecurityGroupIngress",
+      "Properties": {
+        "GroupId": { "Ref": "NatSecurityGroup" },
+        "IpProtocol": "icmp",
+        "FromPort": "-1",
+        "ToPort": "-1",
+        "SourceSecurityGroupId": { "Ref": "NatSecurityGroup" }
+      }
+    },
+
+    "NatSecurityGroupIngress22" : {
+      "DependsOn" : ["NatSecurityGroup"],
+      "Type": "AWS::EC2::SecurityGroupIngress",
+      "Properties": {
+        "GroupId": { "Ref": "NatSecurityGroup" },
+        "IpProtocol": "tcp",
+        "FromPort": "22",
+        "ToPort": "22",
+        "SourceSecurityGroupId": { "Ref": "NatSecurityGroup" }
+      }
+    },
+
+    "NatSecurityGroupIngress3389" : {
+      "DependsOn" : ["NatSecurityGroup"],
+      "Type": "AWS::EC2::SecurityGroupIngress",
+      "Properties": {
+        "GroupId": { "Ref": "NatSecurityGroup" },
+        "IpProtocol": "tcp",
+        "FromPort": "3389",
+        "ToPort": "3389",
+        "SourceSecurityGroupId": { "Ref": "NatSecurityGroup" }
+      }
+    },
+
+    "NatSecurityGroupIngress80" : {
+      "DependsOn" : ["NatSecurityGroup"],
+      "Type": "AWS::EC2::SecurityGroupIngress",
+      "Properties": {
+        "GroupId": { "Ref": "NatSecurityGroup" },
+        "IpProtocol": "tcp",
+        "FromPort": "80",
+        "ToPort": "80",
+        "SourceSecurityGroupId": { "Ref": "NatSecurityGroup" }
+      }
+    },
+
+    "NatSecurityGroupIngress443" : {
+      "DependsOn" : ["NatSecurityGroup"],
+      "Type": "AWS::EC2::SecurityGroupIngress",
+      "Properties": {
+        "GroupId": { "Ref": "NatSecurityGroup" },
+        "IpProtocol": "tcp",
+        "FromPort": "443",
+        "ToPort": "443",
+        "SourceSecurityGroupId": { "Ref": "NatSecurityGroup" }
+      }
+    },
+
     "NAT" : {
       "Type" : "AWS::EC2::Instance",
       "Properties" : {

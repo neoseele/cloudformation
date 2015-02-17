@@ -142,5 +142,6 @@ Demo:
           value: drupal
         DBPassword:
           value: drupal123
-
+        MultiAZDatabase:
+          value: false
 
