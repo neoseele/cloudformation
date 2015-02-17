@@ -1,0 +1,159 @@
+{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+
+  "Description" : "VPC Subnets",
+
+  "Parameters" : {
+
+    "VPC" : {
+      "Description" : "VPC",
+      "Type" : "String"
+    },
+
+    "PublicCIDR" : {
+      "Description" : "",
+      "Type" : "String"
+    },
+
+    "PublicLoadBalancerCIDR" : {
+      "Description" : "",
+      "Type" : "String"
+    },
+
+    "PrivateCIDR" : {
+      "Description" : "",
+      "Type" : "String"
+    },
+
+    "PrivateLoadBalancerCIDR" : {
+      "Description" : "",
+      "Type" : "String"
+    },
+
+    "PublicRouteTable" : {
+      "Description" : "",
+      "Type" : "String"
+    },
+
+    "PrivateRouteTable" : {
+      "Description" : "",
+      "Type" : "String"
+    },
+
+    "AvailabilityZone" : {
+      "Description" : "",
+      "Type" : "String"
+    },
+
+    "Region" : {
+      "Description" : "",
+      "Type" : "String"
+    },
+
+    "Environment" : {
+      "Description" : "",
+      "Type" : "String"
+    }
+
+  },
+
+  "Mappings" : {
+    "Case" : {
+      "A" : { "Low" : "a" },
+      "B" : { "Low" : "b" },
+      "C" : { "Low" : "c" },
+      "D" : { "Low" : "d" }
+    }
+  },
+
+  "Resources" : {
+
+    "PublicSubnet" : {
+      "Type" : "AWS::EC2::Subnet",
+      "Properties" : {
+        "VpcId" : { "Ref" : "VPC" },
+        "AvailabilityZone" : { "Fn::Join" : [ "", [ {"Ref" : "Region"}, { "Fn::FindInMap": [ "Case", {"Ref" : "AvailabilityZone" }, "Low" ] } ]] },
+        "CidrBlock" : { "Ref" : "PublicCIDR" },
+        "Tags" : [
+          { "Key" : "Application", "Value" : { "Ref" : "AWS::StackName" } },
+          { "Key" : "Network", "Value" : "Public" },
+          { "Key" : "Name", "Value" : { "Fn::Join" : [ "", [ { "Ref" : "Environment" }, "Public", { "Ref":"AvailabilityZone" } ]] }}
+        ]
+      }
+    },
+
+    "PublicLoadBalancerSubnet" : {
+      "Type" : "AWS::EC2::Subnet",
+      "Properties" : {
+        "VpcId" : { "Ref" : "VPC" },
+        "AvailabilityZone" : { "Fn::Join" : [ "", [ {"Ref" : "Region"}, { "Fn::FindInMap": [ "Case", {"Ref" : "AvailabilityZone" }, "Low" ] } ]] },
+        "CidrBlock" : { "Ref" : "PublicLoadBalancerCIDR" },
+        "Tags" : [
+          { "Key" : "Application", "Value" : { "Ref" : "AWS::StackName" } },
+          { "Key" : "Network", "Value" : "Public" },
+          { "Key" : "Name", "Value" : { "Fn::Join" : [ "", [ { "Ref" : "Environment" }, "PublicLoadBalancer", { "Ref":"AvailabilityZone" } ]] }}
+        ]
+      }
+    },
+
+    "PrivateSubnet" : {
+      "Type" : "AWS::EC2::Subnet",
+      "Properties" : {
+        "VpcId" : { "Ref" : "VPC" },
+        "AvailabilityZone" : { "Fn::Join" : [ "", [ {"Ref" : "Region"}, { "Fn::FindInMap": [ "Case", {"Ref" : "AvailabilityZone" }, "Low" ] } ]] },
+        "CidrBlock" : { "Ref" : "PrivateCIDR" },
+        "Tags" : [
+          { "Key" : "Application", "Value" : { "Ref" : "AWS::StackName" } },
+          { "Key" : "Network", "Value" : "Private" },
+          { "Key" : "Name", "Value" : { "Fn::Join" : [ "", [ { "Ref" : "Environment" }, "Private", { "Ref":"AvailabilityZone" } ]] }}
+        ]
+      }
+    },
+
+    "PrivateLoadBalancerSubnet" : {
+      "Type" : "AWS::EC2::Subnet",
+      "Properties" : {
+        "VpcId" : { "Ref" : "VPC" },
+        "AvailabilityZone" : { "Fn::Join" : [ "", [ {"Ref" : "Region"}, { "Fn::FindInMap": [ "Case", {"Ref" : "AvailabilityZone" }, "Low" ] } ]] },
+        "CidrBlock" : { "Ref" : "PrivateLoadBalancerCIDR" },
+        "Tags" : [
+          { "Key" : "Application", "Value" : { "Ref" : "AWS::StackName" } },
+          { "Key" : "Network", "Value" : "Private" },
+          { "Key" : "Name", "Value" : { "Fn::Join" : [ "", [ { "Ref" : "Environment" }, "PrivateLoadBalancer", { "Ref":"AvailabilityZone" } ]] }}
+        ]
+      }
+    },
+
+    "PublicSubnetRouteTableAssociation" : {
+      "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties" : {
+        "SubnetId" : { "Ref" : "PublicSubnet" },
+        "RouteTableId" : { "Ref" : "PublicRouteTable" }
+      }
+    },
+
+    "PublicLoadBalancerSubnetRouteTableAssociation" : {
+      "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties" : {
+        "SubnetId" : { "Ref" : "PublicLoadBalancerSubnet" },
+        "RouteTableId" : { "Ref" : "PublicRouteTable" }
+      }
+    },
+
+    "PrivateSubnetRouteTableAssociation" : {
+      "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties" : {
+        "SubnetId" : { "Ref" : "PrivateSubnet" },
+        "RouteTableId" : { "Ref" : "PrivateRouteTable" }
+      }
+    },
+
+    "PrivateLoadBalancerSubnetRouteTableAssociation" : {
+      "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties" : {
+        "SubnetId" : { "Ref" : "PrivateSubnet" },
+        "RouteTableId" : { "Ref" : "PrivateRouteTable" }
+      }
+    }
+  }
+}

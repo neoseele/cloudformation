@@ -1,0 +1,146 @@
+# MegaStack name. All stacks in CF get prefixed with this name.
+---
+Demo:
+  Name: &Name Vpc1
+  region: &Region ap-southeast-2
+  Environment: &Environment Dev
+  KeyName: &KeyName nmiao
+  VpcCidrRange: &VpcCidrRange 10.0.0.0/16
+  PublicA: &PublicA 10.0.0.0/25
+  PublicLoadBalancerA: &PublicLoadBalancerA 10.0.0.128/25
+  PublicB: &PublicB 10.0.1.0/25
+  PublicLoadBalancerB: &PublicLoadBalancerB 10.0.1.128/25
+  PrivateA: &PrivateA 10.0.2.0/25
+  PrivateLoadBalancerA: &PrivateLoadBalancerA 10.0.2.128/25
+  PrivateB: &PrivateB 10.0.3.0/25
+  PrivateLoadBalancerB: &PrivateLoadBalancerB 10.0.3.128/25
+
+  stacks:
+    VPC:
+      cf_template: vpc.json
+      depends:
+      params:
+        CIDR:
+          value: *VpcCidrRange
+        Environment:
+          value: *Environment
+    Route:
+      cf_template: route.json
+      depends:
+        - VPC
+      params:
+        VPC:
+          source: VPC
+          type: resource
+          variable: VPC
+    SubnetAzA:
+      cf_template: subnet.json
+      depends:
+        - Route
+      params:
+        AvailabilityZone:
+          value: A
+        VPC:
+          source: VPC
+          type: resource
+          variable: VPC
+        PublicRouteTable:
+          source: Route
+          type: resource
+          variable: PublicRouteTable
+        PrivateRouteTable:
+          source: Route
+          type: resource
+          variable: PrivateRouteTable
+        PublicCIDR:
+          value: *PublicA
+        PublicLoadBalancerCIDR:
+          value: *PublicLoadBalancerA
+        PrivateCIDR:
+          value: *PrivateA
+        PrivateLoadBalancerCIDR:
+          value: *PrivateLoadBalancerA
+        Region:
+          value: *Region
+        Environment:
+          value: *Environment
+    SubnetAzB:
+      cf_template: subnet.json
+      depends:
+        - Route
+      params:
+        AvailabilityZone:
+          value: B
+        VPC:
+          source: VPC
+          type: resource
+          variable: VPC
+        PublicRouteTable:
+          source: Route
+          type: resource
+          variable: PublicRouteTable
+        PrivateRouteTable:
+          source: Route
+          type: resource
+          variable: PrivateRouteTable
+        PublicCIDR:
+          value: *PublicB
+        PublicLoadBalancerCIDR:
+          value: *PublicLoadBalancerB
+        PrivateCIDR:
+          value: *PrivateB
+        PrivateLoadBalancerCIDR:
+          value: *PrivateLoadBalancerB
+        Region:
+          value: *Region
+        Environment:
+          value: *Environment
+    NatA:
+      cf_template: nat.json
+      depends:
+        - SubnetAzA
+      params:
+        VPC:
+          source: VPC
+          type: resource
+          variable: VPC
+        PublicSubnet:
+          source: SubnetAzA
+          type: resource
+          variable: PublicSubnet
+        PrivateRouteTable:
+          source: Route
+          type: resource
+          variable: PrivateRouteTable
+        KeyName:
+          value: *KeyName
+    LAMP:
+      cf_template: lamp.json
+      depends:
+        - SubnetAzA
+        - SubnetAzB
+      params:
+        LoadBalancerSubnets:
+          - source: SubnetAzA
+            type: resource
+            variable: PublicLoadBalancerSubnet
+          - source: SubnetAzB
+            type: resource
+            variable: PublicLoadBalancerSubnet
+        VPCZoneIdentifier:
+          - source: SubnetAzA
+            type: resource
+            variable: PrivateSubnet
+          - source: SubnetAzB
+            type: resource
+            variable: PrivateSubnet
+        KeyName:
+          value: *KeyName
+        DBName:
+          value: drupal
+        DBUser:
+          value: drupal
+        DBPassword:
+          value: drupal123
+
+

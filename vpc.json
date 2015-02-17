@@ -1,0 +1,30 @@
+{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+
+  "Description" : "VPC",
+
+  "Parameters" : {
+    "CIDR" :  {
+      "Description" : "VPC IP range",
+      "Type" : "String"
+    },
+    "Environment" : {
+      "Description" : "VPC's Environment",
+      "Type" : "String"
+    }
+  },
+
+  "Resources" : {
+    "VPC" : {
+      "Type" : "AWS::EC2::VPC",
+      "Properties" : {
+        "CidrBlock" : { "Ref" : "CIDR" },
+        "Tags" : [
+          { "Key" : "Application", "Value" : { "Ref" : "AWS::StackName" } },
+          { "Key" : "Network", "Value" : "Public" },
+          { "Key" : "Name", "Value" : { "Fn::Join" : [ "", [ {"Ref":"Environment"}, "VPC" ] ] } }
+        ]
+      }
+    }
+  }
+}
