@@ -5,7 +5,17 @@
 
   "Parameters" : {
 
+    "VPC" : {
+      "Description" : "VPC",
+      "Type" : "String"
+    },
+
     "LoadBalancerSubnets" : {
+      "Description" : "",
+      "Type" : "CommaDelimitedList"
+    },
+
+    "DatabaseSubnets" : {
       "Description" : "",
       "Type" : "CommaDelimitedList"
     },
@@ -171,12 +181,6 @@
 
   },
 
-  "Conditions" : {
-    "Is-EC2-VPC"     : { "Fn::Or" : [ {"Fn::Equals" : [{"Ref" : "AWS::Region"}, "eu-central-1" ]},
-                                      {"Fn::Equals" : [{"Ref" : "AWS::Region"}, "cn-north-1" ]}]},
-    "Is-EC2-Classic" : { "Fn::Not" : [{ "Condition" : "Is-EC2-VPC"}]}
-  },
-
   "Resources" : {
 
     "ElasticLoadBalancer" : {
@@ -217,7 +221,7 @@
       },
       "CreationPolicy" : {
         "ResourceSignal" : {
-          "Timeout" : "PT5M",
+          "Timeout" : "PT15M",
           "Count"   : { "Ref" : "WebServerCapacity" }
         }
       },
@@ -375,9 +379,10 @@
     "WebServerSecurityGroup" : {
       "Type" : "AWS::EC2::SecurityGroup",
       "Properties" : {
+        "VpcId" : { "Ref" : "VPC" },
         "GroupDescription" : "Enable HTTP access via port 80 locked down to the ELB and SSH access",
         "SecurityGroupIngress" : [
-          {"IpProtocol" : "tcp", "FromPort" : "80", "ToPort" : "80", "SourceSecurityGroupOwnerId" : {"Fn::GetAtt" : ["ElasticLoadBalancer", "SourceSecurityGroup.OwnerAlias"]},"SourceSecurityGroupName" : {"Fn::GetAtt" : ["ElasticLoadBalancer", "SourceSecurityGroup.GroupName"]}},
+          {"IpProtocol" : "tcp", "FromPort" : "80", "ToPort" : "80", "CidrIp" : "10.0.0.0/16" },
           {"IpProtocol" : "tcp", "FromPort" : "22", "ToPort" : "22", "CidrIp" : { "Ref" : "SSHLocation"}}
         ]
       }
@@ -385,26 +390,23 @@
 
     "DBEC2SecurityGroup": {
       "Type": "AWS::EC2::SecurityGroup",
-      "Condition" : "Is-EC2-VPC",
       "Properties" : {
+        "VpcId" : { "Ref" : "VPC" },
         "GroupDescription": "Open database for access",
         "SecurityGroupIngress" : [{
           "IpProtocol" : "tcp",
-          "FromPort" : "3306", 
+          "FromPort" : "3306",
           "ToPort" : "3306",
-          "SourceSecurityGroupName" : { "Ref" : "WebServerSecurityGroup" }
-        }]
+          "CidrIp" : "10.0.0.0/16" }
+        ]
       }
     },
 
-    "DBSecurityGroup": {
-      "Type": "AWS::RDS::DBSecurityGroup",
-      "Condition" : "Is-EC2-Classic",
-      "Properties": {
-        "DBSecurityGroupIngress": {
-          "EC2SecurityGroupName": { "Ref": "WebServerSecurityGroup" }
-        },
-        "GroupDescription": "database access"
+    "DBSubnetGroup": {
+      "Type" : "AWS::RDS::DBSubnetGroup",
+      "Properties" : {
+        "DBSubnetGroupDescription" : "description",
+        "SubnetIds" : { "Ref" : "DatabaseSubnets" }
       }
     },
 
@@ -418,8 +420,8 @@
         "MasterUserPassword": { "Ref" : "DBPassword" },
         "DBInstanceClass": { "Ref" : "DBInstanceClass" },
         "AllocatedStorage": { "Ref" : "DBAllocatedStorage" },
-        "VPCSecurityGroups": { "Fn::If" : [ "Is-EC2-VPC", [ { "Fn::GetAtt": [ "DBEC2SecurityGroup", "GroupId" ] } ], { "Ref" : "AWS::NoValue"}]},
-        "DBSecurityGroups": { "Fn::If" : [ "Is-EC2-Classic", [ { "Ref": "DBSecurityGroup" } ], { "Ref" : "AWS::NoValue"}]}
+        "VPCSecurityGroups": [ { "Ref" : "DBEC2SecurityGroup" } ],
+        "DBSubnetGroupName": { "Ref" : "DBSubnetGroup" }
       }
     }
   },
