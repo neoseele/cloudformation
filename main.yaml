@@ -44,14 +44,22 @@ Demo:
           source: VPC
           type: resource
           variable: VPC
-        ExternalSharedTable:
+        ExternalRouteTable:
           source: Shared
           type: resource
-          variable: ExternalSharedTable
-        InternalSharedTable:
+          variable: ExternalRouteTable
+        InternalRouteTable:
           source: Shared
           type: resource
-          variable: InternalSharedTable
+          variable: InternalRouteTable
+        ExternalAcl:
+          source: Shared
+          type: resource
+          variable: ExternalAcl
+        InternalAcl:
+          source: Shared
+          type: resource
+          variable: InternalAcl
         ExternalCIDR:
           value: *ExternalA
         ExternalLoadBalancerCIDR:
@@ -75,14 +83,22 @@ Demo:
           source: VPC
           type: resource
           variable: VPC
-        ExternalSharedTable:
+        ExternalRouteTable:
           source: Shared
           type: resource
-          variable: ExternalSharedTable
-        InternalSharedTable:
+          variable: ExternalRouteTable
+        InternalRouteTable:
           source: Shared
           type: resource
-          variable: InternalSharedTable
+          variable: InternalRouteTable
+        ExternalAcl:
+          source: Shared
+          type: resource
+          variable: ExternalAcl
+        InternalAcl:
+          source: Shared
+          type: resource
+          variable: InternalAcl
         ExternalCIDR:
           value: *ExternalB
         ExternalLoadBalancerCIDR:

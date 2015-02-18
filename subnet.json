@@ -55,6 +55,15 @@
       "Type" : "String"
     }
 
+    "InternalAcl" : {
+      "Description" : "",
+      "Type" : "String"
+    }
+
+    "ExternalAcl" : {
+      "Description" : "",
+      "Type" : "String"
+    }
   },
 
   "Mappings" : {
@@ -159,10 +168,18 @@
     "ExternalSubnetAclAssociation" : {
       "Type" : "AWS::EC2::SubnetNetworkAclAssociation",
       "Properties" : {
-        "SubnetId" : { "Ref":"ExternalSubnet" },
-        "NetworkAclId" : { "Ref":"ExternalAcl" }
+        "SubnetId" : { "Ref" : "ExternalSubnet" },
+        "NetworkAclId" : { "Ref" : "ExternalAcl" }
       }
     },
+
+    "ApplicationSubnetAclAssociation" : {
+      "Type" : "AWS::EC2::SubnetNetworkAclAssociation",
+      "Properties" : {
+        "SubnetId" : { "Ref" : "ApplicationSubnet" },
+        "NetworkAclId" : { "Ref" : "InternalAcl" }
+      }
+    }
 
   }
 }
