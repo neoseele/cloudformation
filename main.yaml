@@ -126,10 +126,10 @@ Demo:
           source: SubnetAzA
           type: resource
           variable: ExternalSubnet
-        InternalSharedTable:
+        InternalRouteTable:
           source: Shared
           type: resource
-          variable: InternalSharedTable
+          variable: InternalRouteTable
         KeyName:
           value: *KeyName
     LAMP:
