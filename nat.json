@@ -15,12 +15,12 @@
       "Type" : "String"
     },
 
-    "PublicSubnet" : {
+    "ExternalSubnet" : {
       "Description" : "",
       "Type" : "String"
     },
 
-    "PrivateRouteTable" : {
+    "InternalRouteTable" : {
       "Description" : "",
       "Type" : "String"
     },
@@ -159,7 +159,7 @@
           "AssociatePublicIpAddress" : "true",
           "DeviceIndex"              : "0",
           "DeleteOnTermination"      : "true",
-          "SubnetId"                 : { "Ref" : "PublicSubnet" }
+          "SubnetId"                 : { "Ref" : "ExternalSubnet" }
         }],
         "Tags" : [
           { "Key" : "Name", "Value" : { "Fn::Join" : [ "", [ "Nat", { "Ref" : "AvailabilityZone" } ]] }}
@@ -171,10 +171,10 @@
       }
     },
 
-    "PrivateRoute" : {
+    "InternalRoute" : {
       "Type" : "AWS::EC2::Route",
       "Properties" : {
-        "RouteTableId" : { "Ref" : "PrivateRouteTable" },
+        "RouteTableId" : { "Ref" : "InternalRouteTable" },
         "DestinationCidrBlock" : "0.0.0.0/0",
         "InstanceId" : { "Ref" : "NAT" }
       }

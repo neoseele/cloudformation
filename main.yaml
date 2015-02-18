@@ -6,16 +6,14 @@ Demo:
   Environment: &Environment Dev
   KeyName: &KeyName nmiao
   VpcCidrRange: &VpcCidrRange 10.0.0.0/16
-  PublicA: &PublicA 10.0.0.0/25
-  PublicLoadBalancerA: &PublicLoadBalancerA 10.0.0.128/25
-  PublicB: &PublicB 10.0.1.0/25
-  PublicLoadBalancerB: &PublicLoadBalancerB 10.0.1.128/25
-  PrivateA: &PrivateA 10.0.2.0/25
-  PrivateLoadBalancerA: &PrivateLoadBalancerA 10.0.2.128/25
-  PrivateB: &PrivateB 10.0.3.0/25
-  PrivateLoadBalancerB: &PrivateLoadBalancerB 10.0.3.128/25
-  DatabaseA: &DatabaseA 10.0.100.0/24
-  DatabaseB: &DatabaseB 10.0.110.0/24
+  ExternalLoadBalancerA: &ExternalLoadBalancerA 10.0.0.0/24
+  ExternalLoadBalancerB: &ExternalLoadBalancerB 10.0.128.0/24
+  ExternalA: &ExternalA 10.0.1.0/24
+  ExternalB: &ExternalB 10.0.129.0/24
+  ApplicationA: &ApplicationA 10.0.2.0/24
+  ApplicationB: &ApplicationB 10.0.130.0/24
+  DatabaseA: &DatabaseA 10.0.3.0/24
+  DatabaseB: &DatabaseB 10.0.131.0/24
 
   stacks:
     VPC:
@@ -26,8 +24,8 @@ Demo:
           value: *VpcCidrRange
         Environment:
           value: *Environment
-    Route:
-      cf_template: route.json
+    Shared:
+      cf_template: shared.json
       depends:
         - VPC
       params:
@@ -38,7 +36,7 @@ Demo:
     SubnetAzA:
       cf_template: subnet.json
       depends:
-        - Route
+        - Shared
       params:
         AvailabilityZone:
           value: A
@@ -46,22 +44,20 @@ Demo:
           source: VPC
           type: resource
           variable: VPC
-        PublicRouteTable:
-          source: Route
+        ExternalSharedTable:
+          source: Shared
           type: resource
-          variable: PublicRouteTable
-        PrivateRouteTable:
-          source: Route
+          variable: ExternalSharedTable
+        InternalSharedTable:
+          source: Shared
           type: resource
-          variable: PrivateRouteTable
-        PublicCIDR:
-          value: *PublicA
-        PublicLoadBalancerCIDR:
-          value: *PublicLoadBalancerA
-        PrivateCIDR:
-          value: *PrivateA
-        PrivateLoadBalancerCIDR:
-          value: *PrivateLoadBalancerA
+          variable: InternalSharedTable
+        ExternalCIDR:
+          value: *ExternalA
+        ExternalLoadBalancerCIDR:
+          value: *ExternalLoadBalancerA
+        ApplicationCIDR:
+          value: *ApplicationA
         DatabaseCIDR:
           value: *DatabaseA
         Region:
@@ -71,7 +67,7 @@ Demo:
     SubnetAzB:
       cf_template: subnet.json
       depends:
-        - Route
+        - Shared
       params:
         AvailabilityZone:
           value: B
@@ -79,22 +75,20 @@ Demo:
           source: VPC
           type: resource
           variable: VPC
-        PublicRouteTable:
-          source: Route
+        ExternalSharedTable:
+          source: Shared
           type: resource
-          variable: PublicRouteTable
-        PrivateRouteTable:
-          source: Route
+          variable: ExternalSharedTable
+        InternalSharedTable:
+          source: Shared
           type: resource
-          variable: PrivateRouteTable
-        PublicCIDR:
-          value: *PublicB
-        PublicLoadBalancerCIDR:
-          value: *PublicLoadBalancerB
-        PrivateCIDR:
-          value: *PrivateB
-        PrivateLoadBalancerCIDR:
-          value: *PrivateLoadBalancerB
+          variable: InternalSharedTable
+        ExternalCIDR:
+          value: *ExternalB
+        ExternalLoadBalancerCIDR:
+          value: *ExternalLoadBalancerB
+        ApplicationCIDR:
+          value: *ApplicationB
         DatabaseCIDR:
           value: *DatabaseB
         Region:
@@ -112,14 +106,14 @@ Demo:
           source: VPC
           type: resource
           variable: VPC
-        PublicSubnet:
+        ExternalSubnet:
           source: SubnetAzA
           type: resource
-          variable: PublicSubnet
-        PrivateRouteTable:
-          source: Route
+          variable: ExternalSubnet
+        InternalSharedTable:
+          source: Shared
           type: resource
-          variable: PrivateRouteTable
+          variable: InternalSharedTable
         KeyName:
           value: *KeyName
     LAMP:
@@ -135,10 +129,10 @@ Demo:
         LoadBalancerSubnets:
           - source: SubnetAzA
             type: resource
-            variable: PublicLoadBalancerSubnet
+            variable: ExternalLoadBalancerSubnet
           - source: SubnetAzB
             type: resource
-            variable: PublicLoadBalancerSubnet
+            variable: ExternalLoadBalancerSubnet
         DatabaseSubnets:
           - source: SubnetAzA
             type: resource
@@ -149,10 +143,10 @@ Demo:
         VPCZoneIdentifier:
           - source: SubnetAzA
             type: resource
-            variable: PrivateSubnet
+            variable: ApplicationSubnet
           - source: SubnetAzB
             type: resource
-            variable: PrivateSubnet
+            variable: ApplicationSubnet
         NatSecurityGroup:
           source: NatA
           type: resource

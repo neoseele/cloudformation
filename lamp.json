@@ -11,17 +11,17 @@
     },
 
     "LoadBalancerSubnets" : {
-      "Description" : "",
+      "Description" : "Load Balancer subnets",
       "Type" : "CommaDelimitedList"
     },
 
     "DatabaseSubnets" : {
-      "Description" : "",
+      "Description" : "RDS subnets",
       "Type" : "CommaDelimitedList"
     },
 
     "VPCZoneIdentifier" : {
-      "Description" : "Private Subnets where Application Server lives",
+      "Description" : "Application subnets",
       "Type" : "CommaDelimitedList"
     },
 
@@ -187,7 +187,7 @@
       "Type": "AWS::EC2::SecurityGroup",
       "Properties" : {
         "VpcId" : { "Ref" : "VPC" },
-        "GroupDescription": "Public Load Balancer Access",
+        "GroupDescription": "Load Balancer Access",
         "SecurityGroupIngress" : [
           {
             "IpProtocol" : "tcp",
@@ -405,8 +405,7 @@
         "VpcId" : { "Ref" : "VPC" },
         "GroupDescription" : "Enable HTTP access via port 80 locked down to the ELB and SSH access",
         "SecurityGroupIngress" : [
-          {"IpProtocol" : "tcp", "FromPort" : "80", "ToPort" : "80", "SourceSecurityGroupOwnerId" : {"Fn::GetAtt" : ["ElasticLoadBalancer", "SourceSecurityGroup.OwnerAlias"]},"SourceSecurityGroupName" : {"Fn::GetAtt" : ["ElasticLoadBalancer", "SourceSecurityGroup.GroupName"]}},
-          {"IpProtocol" : "tcp", "FromPort" : "22", "ToPort" : "22", "CidrIp" : { "Ref" : "SSHLocation"}}
+          {"IpProtocol" : "tcp", "FromPort" : "80", "ToPort" : "80", "SourceSecurityGroupId" : { "Ref" : "LoadBalancerSecurityGroup" }},
         ]
       }
     },
@@ -416,12 +415,9 @@
       "Properties" : {
         "VpcId" : { "Ref" : "VPC" },
         "GroupDescription": "Open database for access",
-        "SecurityGroupIngress" : [{
-          "IpProtocol" : "tcp",
-          "FromPort" : "3306",
-          "ToPort" : "3306",
-          "SourceSecurityGroupName" : { "Ref" : "WebServerSecurityGroup" }
-        }]
+        "SecurityGroupIngress" : [
+          { "IpProtocol" : "tcp", "FromPort" : "3306", "ToPort" : "3306", "SourceSecurityGroupId" : { "Ref" : "WebServerSecurityGroup" }}
+        ]
       }
     },
 

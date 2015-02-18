@@ -10,22 +10,17 @@
       "Type" : "String"
     },
 
-    "PublicCIDR" : {
+    "ExternalCIDR" : {
       "Description" : "",
       "Type" : "String"
     },
 
-    "PublicLoadBalancerCIDR" : {
+    "ExternalLoadBalancerCIDR" : {
       "Description" : "",
       "Type" : "String"
     },
 
-    "PrivateCIDR" : {
-      "Description" : "",
-      "Type" : "String"
-    },
-
-    "PrivateLoadBalancerCIDR" : {
+    "ApplicationCIDR" : {
       "Description" : "",
       "Type" : "String"
     },
@@ -35,12 +30,12 @@
       "Type" : "String"
     },
 
-    "PublicRouteTable" : {
+    "ExternalRouteTable" : {
       "Description" : "",
       "Type" : "String"
     },
 
-    "PrivateRouteTable" : {
+    "InternalRouteTable" : {
       "Description" : "",
       "Type" : "String"
     },
@@ -73,58 +68,44 @@
 
   "Resources" : {
 
-    "PublicSubnet" : {
+    "ExternalSubnet" : {
       "Type" : "AWS::EC2::Subnet",
       "Properties" : {
         "VpcId" : { "Ref" : "VPC" },
         "AvailabilityZone" : { "Fn::Join" : [ "", [ {"Ref" : "Region"}, { "Fn::FindInMap": [ "Case", {"Ref" : "AvailabilityZone" }, "Low" ] } ]] },
-        "CidrBlock" : { "Ref" : "PublicCIDR" },
+        "CidrBlock" : { "Ref" : "ExternalCIDR" },
         "Tags" : [
-          { "Key" : "Application", "Value" : { "Ref" : "AWS::StackName" } },
-          { "Key" : "Network", "Value" : "Public" },
-          { "Key" : "Name", "Value" : { "Fn::Join" : [ "", [ { "Ref" : "Environment" }, "Public", { "Ref" : "AvailabilityZone" } ]] }}
+          { "Key" : "Applicationlication", "Value" : { "Ref" : "AWS::StackName" } },
+          { "Key" : "Network", "Value" : "External" },
+          { "Key" : "Name", "Value" : { "Fn::Join" : [ "", [ { "Ref" : "Environment" }, "External", { "Ref" : "AvailabilityZone" } ]] }}
         ]
       }
     },
 
-    "PublicLoadBalancerSubnet" : {
+    "ExternalLoadBalancerSubnet" : {
       "Type" : "AWS::EC2::Subnet",
       "Properties" : {
         "VpcId" : { "Ref" : "VPC" },
         "AvailabilityZone" : { "Fn::Join" : [ "", [ {"Ref" : "Region"}, { "Fn::FindInMap": [ "Case", {"Ref" : "AvailabilityZone" }, "Low" ] } ]] },
-        "CidrBlock" : { "Ref" : "PublicLoadBalancerCIDR" },
+        "CidrBlock" : { "Ref" : "ExternalLoadBalancerCIDR" },
         "Tags" : [
-          { "Key" : "Application", "Value" : { "Ref" : "AWS::StackName" } },
-          { "Key" : "Network", "Value" : "Public" },
-          { "Key" : "Name", "Value" : { "Fn::Join" : [ "", [ { "Ref" : "Environment" }, "PublicLoadBalancer", { "Ref" : "AvailabilityZone" } ]] }}
+          { "Key" : "Applicationlication", "Value" : { "Ref" : "AWS::StackName" } },
+          { "Key" : "Network", "Value" : "External" },
+          { "Key" : "Name", "Value" : { "Fn::Join" : [ "", [ { "Ref" : "Environment" }, "ExternalLoadBalancer", { "Ref" : "AvailabilityZone" } ]] }}
         ]
       }
     },
 
-    "PrivateSubnet" : {
+    "ApplicationSubnet" : {
       "Type" : "AWS::EC2::Subnet",
       "Properties" : {
         "VpcId" : { "Ref" : "VPC" },
         "AvailabilityZone" : { "Fn::Join" : [ "", [ {"Ref" : "Region"}, { "Fn::FindInMap": [ "Case", {"Ref" : "AvailabilityZone" }, "Low" ] } ]] },
-        "CidrBlock" : { "Ref" : "PrivateCIDR" },
+        "CidrBlock" : { "Ref" : "ApplicationCIDR" },
         "Tags" : [
-          { "Key" : "Application", "Value" : { "Ref" : "AWS::StackName" } },
-          { "Key" : "Network", "Value" : "Private" },
-          { "Key" : "Name", "Value" : { "Fn::Join" : [ "", [ { "Ref" : "Environment" }, "Private", { "Ref" : "AvailabilityZone" } ]] }}
-        ]
-      }
-    },
-
-    "PrivateLoadBalancerSubnet" : {
-      "Type" : "AWS::EC2::Subnet",
-      "Properties" : {
-        "VpcId" : { "Ref" : "VPC" },
-        "AvailabilityZone" : { "Fn::Join" : [ "", [ {"Ref" : "Region"}, { "Fn::FindInMap": [ "Case", {"Ref" : "AvailabilityZone" }, "Low" ] } ]] },
-        "CidrBlock" : { "Ref" : "PrivateLoadBalancerCIDR" },
-        "Tags" : [
-          { "Key" : "Application", "Value" : { "Ref" : "AWS::StackName" } },
-          { "Key" : "Network", "Value" : "Private" },
-          { "Key" : "Name", "Value" : { "Fn::Join" : [ "", [ { "Ref" : "Environment" }, "PrivateLoadBalancer", { "Ref" : "AvailabilityZone" } ]] }}
+          { "Key" : "Applicationlication", "Value" : { "Ref" : "AWS::StackName" } },
+          { "Key" : "Network", "Value" : "Application" },
+          { "Key" : "Name", "Value" : { "Fn::Join" : [ "", [ { "Ref" : "Environment" }, "Application", { "Ref" : "AvailabilityZone" } ]] }}
         ]
       }
     },
@@ -136,42 +117,34 @@
         "AvailabilityZone" : { "Fn::Join" : [ "", [ {"Ref" : "Region"}, { "Fn::FindInMap": [ "Case", {"Ref" : "AvailabilityZone" }, "Low" ] } ]] },
         "CidrBlock" : { "Ref" : "DatabaseCIDR" },
         "Tags" : [
-          { "Key" : "Application", "Value" : { "Ref" : "AWS::StackName" } },
-          { "Key" : "Network", "Value" : "Private" },
+          { "Key" : "Applicationlication", "Value" : { "Ref" : "AWS::StackName" } },
+          { "Key" : "Network", "Value" : "Application" },
           { "Key" : "Name", "Value" : { "Fn::Join" : [ "", [ { "Ref" : "Environment" }, "Database", { "Ref" : "AvailabilityZone" } ]] }}
         ]
       }
     },
 
-    "PublicSubnetRouteTableAssociation" : {
+    "ExternalSubnetRouteTableAssociation" : {
       "Type" : "AWS::EC2::SubnetRouteTableAssociation",
       "Properties" : {
-        "SubnetId" : { "Ref" : "PublicSubnet" },
-        "RouteTableId" : { "Ref" : "PublicRouteTable" }
+        "SubnetId" : { "Ref" : "ExternalSubnet" },
+        "RouteTableId" : { "Ref" : "ExternalRouteTable" }
       }
     },
 
-    "PublicLoadBalancerSubnetRouteTableAssociation" : {
+    "ExternalLoadBalancerSubnetRouteTableAssociation" : {
       "Type" : "AWS::EC2::SubnetRouteTableAssociation",
       "Properties" : {
-        "SubnetId" : { "Ref" : "PublicLoadBalancerSubnet" },
-        "RouteTableId" : { "Ref" : "PublicRouteTable" }
+        "SubnetId" : { "Ref" : "ExternalLoadBalancerSubnet" },
+        "RouteTableId" : { "Ref" : "ExternalRouteTable" }
       }
     },
 
-    "PrivateSubnetRouteTableAssociation" : {
+    "ApplicationSubnetRouteTableAssociation" : {
       "Type" : "AWS::EC2::SubnetRouteTableAssociation",
       "Properties" : {
-        "SubnetId" : { "Ref" : "PrivateSubnet" },
-        "RouteTableId" : { "Ref" : "PrivateRouteTable" }
-      }
-    },
-
-    "PrivateLoadBalancerSubnetRouteTableAssociation" : {
-      "Type" : "AWS::EC2::SubnetRouteTableAssociation",
-      "Properties" : {
-        "SubnetId" : { "Ref" : "PrivateLoadBalancerSubnet" },
-        "RouteTableId" : { "Ref" : "PrivateRouteTable" }
+        "SubnetId" : { "Ref" : "ApplicationSubnet" },
+        "RouteTableId" : { "Ref" : "InternalRouteTable" }
       }
     },
 
@@ -179,8 +152,17 @@
       "Type" : "AWS::EC2::SubnetRouteTableAssociation",
       "Properties" : {
         "SubnetId" : { "Ref" : "DatabaseSubnet" },
-        "RouteTableId" : { "Ref" : "PrivateRouteTable" }
+        "RouteTableId" : { "Ref" : "InternalRouteTable" }
       }
-    }
+    },
+
+    "ExternalSubnetAclAssociation" : {
+      "Type" : "AWS::EC2::SubnetNetworkAclAssociation",
+      "Properties" : {
+        "SubnetId" : { "Ref":"ExternalSubnet" },
+        "NetworkAclId" : { "Ref":"ExternalAcl" }
+      }
+    },
+
   }
 }
