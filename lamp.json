@@ -183,6 +183,28 @@
 
   "Resources" : {
 
+    "LoadBalancerSecurityGroup" : {
+      "Type": "AWS::EC2::SecurityGroup",
+      "Properties" : {
+        "VpcId" : { "Ref" : "VPC" },
+        "GroupDescription": "Public Load Balancer Access",
+        "SecurityGroupIngress" : [
+          {
+            "IpProtocol" : "tcp",
+            "FromPort" : "80",
+            "ToPort" : "80",
+            "CidrIp" : "0.0.0.0/0"
+          },
+          {
+            "IpProtocol" : "tcp",
+            "FromPort" : "443",
+            "ToPort" : "443",
+            "CidrIp" : "0.0.0.0/0"
+          }
+        ]
+      }
+    },
+
     "ElasticLoadBalancer" : {
       "Type" : "AWS::ElasticLoadBalancing::LoadBalancer",
       "Properties" : {
@@ -204,7 +226,8 @@
           "UnhealthyThreshold" : "5",
           "Interval" : "10",
           "Timeout" : "5"
-        }
+        },
+        "SecurityGroups" : [ { "Ref" : "LoadBalancerSecurityGroup" } ]
       }
     },
 
@@ -274,7 +297,7 @@
                   "      curl_setopt($curl_handle,CURLOPT_CONNECTTIMEOUT,2);\n",
                   "      curl_setopt($curl_handle,CURLOPT_RETURNTRANSFER,1);\n",
                   "      // Get the hostname of the intance from the instance metadata\n",
-                  "      curl_setopt($curl_handle,CURLOPT_URL,'http://169.254.169.254/latest/meta-data/public-hostname');\n",
+                  "      curl_setopt($curl_handle,CURLOPT_URL,'http://169.254.169.254/latest/meta-data/hostname');\n",
                   "      $hostname = curl_exec($curl_handle);\n",
                   "      if (empty($hostname))\n",
                   "      {\n",
@@ -382,7 +405,7 @@
         "VpcId" : { "Ref" : "VPC" },
         "GroupDescription" : "Enable HTTP access via port 80 locked down to the ELB and SSH access",
         "SecurityGroupIngress" : [
-          {"IpProtocol" : "tcp", "FromPort" : "80", "ToPort" : "80", "CidrIp" : "10.0.0.0/16" },
+          {"IpProtocol" : "tcp", "FromPort" : "80", "ToPort" : "80", "SourceSecurityGroupOwnerId" : {"Fn::GetAtt" : ["ElasticLoadBalancer", "SourceSecurityGroup.OwnerAlias"]},"SourceSecurityGroupName" : {"Fn::GetAtt" : ["ElasticLoadBalancer", "SourceSecurityGroup.GroupName"]}},
           {"IpProtocol" : "tcp", "FromPort" : "22", "ToPort" : "22", "CidrIp" : { "Ref" : "SSHLocation"}}
         ]
       }
@@ -397,8 +420,8 @@
           "IpProtocol" : "tcp",
           "FromPort" : "3306",
           "ToPort" : "3306",
-          "CidrIp" : "10.0.0.0/16" }
-        ]
+          "SourceSecurityGroupName" : { "Ref" : "WebServerSecurityGroup" }
+        }]
       }
     },
 
