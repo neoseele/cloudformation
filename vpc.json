@@ -252,7 +252,9 @@
                 "Tags": [
                     {
                         "Key": "Name",
-                        "Value": "AWS::StackName"
+                        "Value": {
+                          "Ref": "AWS::StackName"
+                        }
                     },
                     {
                         "Key": "ServiceComponent",

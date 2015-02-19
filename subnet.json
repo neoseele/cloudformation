@@ -54,23 +54,6 @@
             "Description": "",
             "Type": "String"
         },
-        "KeyName": {
-            "AllowedPattern": "[-_ a-zA-Z0-9]*",
-            "ConstraintDescription": "can contain only alphanumeric characters, spaces, dashes and underscores.",
-            "Description": "Name of an existing EC2 KeyPair (find or create here: https://console.aws.amazon.com/ec2/v2/home#KeyPairs: )",
-            "MaxLength": "64",
-            "MinLength": "1",
-            "Type": "String"
-        },
-        "ServerAccess": {
-            "AllowedPattern": "(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})/(\\d{1,2})",
-            "ConstraintDescription": "must be a valid CIDR range of the form x.x.x.x/x.",
-            "Default": "0.0.0.0/0",
-            "Description": "CIDR IP range allowed to login to the NAT instance",
-            "MaxLength": "18",
-            "MinLength": "9",
-            "Type": "String"
-        },
         "ServicePhase": {
             "Description": "",
             "Type": "String"
@@ -109,7 +92,7 @@
                     {
                         "Key": "Name",
                         "Value": {
-                            "Fn:Join": [
+                            "Fn::Join": [
                                 "",
                                 [
                                     "ApplicationSubnet",
@@ -188,34 +171,34 @@
                     "Ref": "DatabaseCIDR"
                 },
                 "Tags": [
-                  {
-                      "Key": "Name",
-                      "Value": {
-                          "Fn:Join": [
-                              "",
-                              [
-                                  "DatabaseSubnet",
-                                  {
-                                      "Ref": "AvailabilityZone"
-                                  }
-                              ]
-                          ]
-                      }
-                  },
-                  {
-                      "Key": "ServiceComponent",
-                      "Value": "Network"
-                  },
-                  {
-                      "Key": "ServiceName",
-                      "Value": "DatabaseSubnet"
-                  },
-                  {
-                      "Key": "ServicePhase",
-                      "Value": {
-                          "Ref": "ServicePhase"
-                      }
-                  }
+                    {
+                        "Key": "Name",
+                        "Value": {
+                            "Fn::Join": [
+                                "",
+                                [
+                                    "DatabaseSubnet",
+                                    {
+                                        "Ref": "AvailabilityZone"
+                                    }
+                                ]
+                            ]
+                        }
+                    },
+                    {
+                        "Key": "ServiceComponent",
+                        "Value": "Network"
+                    },
+                    {
+                        "Key": "ServiceName",
+                        "Value": "DatabaseSubnet"
+                    },
+                    {
+                        "Key": "ServicePhase",
+                        "Value": {
+                            "Ref": "ServicePhase"
+                        }
+                    }
                 ],
                 "VpcId": {
                     "Ref": "VPC"
@@ -259,34 +242,34 @@
                     "Ref": "ExternalLoadBalancerCIDR"
                 },
                 "Tags": [
-                  {
-                      "Key": "Name",
-                      "Value": {
-                          "Fn:Join": [
-                              "",
-                              [
-                                  "ExternalLoadBalancerSubnet",
-                                  {
-                                      "Ref": "AvailabilityZone"
-                                  }
-                              ]
-                          ]
-                      }
-                  },
-                  {
-                      "Key": "ServiceComponent",
-                      "Value": "Network"
-                  },
-                  {
-                      "Key": "ServiceName",
-                      "Value": "ExternalLoadBalancerSubnet"
-                  },
-                  {
-                      "Key": "ServicePhase",
-                      "Value": {
-                          "Ref": "ServicePhase"
-                      }
-                  }
+                    {
+                        "Key": "Name",
+                        "Value": {
+                            "Fn::Join": [
+                                "",
+                                [
+                                    "ExternalLoadBalancerSubnet",
+                                    {
+                                        "Ref": "AvailabilityZone"
+                                    }
+                                ]
+                            ]
+                        }
+                    },
+                    {
+                        "Key": "ServiceComponent",
+                        "Value": "Network"
+                    },
+                    {
+                        "Key": "ServiceName",
+                        "Value": "ExternalLoadBalancerSubnet"
+                    },
+                    {
+                        "Key": "ServicePhase",
+                        "Value": {
+                            "Ref": "ServicePhase"
+                        }
+                    }
                 ],
                 "VpcId": {
                     "Ref": "VPC"
@@ -330,34 +313,34 @@
                     "Ref": "ExternalCIDR"
                 },
                 "Tags": [
-                  {
-                      "Key": "Name",
-                      "Value": {
-                          "Fn:Join": [
-                              "",
-                              [
-                                  "ExternalSubnet",
-                                  {
-                                      "Ref": "AvailabilityZone"
-                                  }
-                              ]
-                          ]
-                      }
-                  },
-                  {
-                      "Key": "ServiceComponent",
-                      "Value": "Network"
-                  },
-                  {
-                      "Key": "ServiceName",
-                      "Value": "ExternalSubnet"
-                  },
-                  {
-                      "Key": "ServicePhase",
-                      "Value": {
-                          "Ref": "ServicePhase"
-                      }
-                  }
+                    {
+                        "Key": "Name",
+                        "Value": {
+                            "Fn::Join": [
+                                "",
+                                [
+                                    "ExternalSubnet",
+                                    {
+                                        "Ref": "AvailabilityZone"
+                                    }
+                                ]
+                            ]
+                        }
+                    },
+                    {
+                        "Key": "ServiceComponent",
+                        "Value": "Network"
+                    },
+                    {
+                        "Key": "ServiceName",
+                        "Value": "ExternalSubnet"
+                    },
+                    {
+                        "Key": "ServicePhase",
+                        "Value": {
+                            "Ref": "ServicePhase"
+                        }
+                    }
                 ],
                 "VpcId": {
                     "Ref": "VPC"
@@ -387,6 +370,5 @@
             },
             "Type": "AWS::EC2::SubnetRouteTableAssociation"
         }
-
     }
 }

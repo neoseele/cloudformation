@@ -1,6 +1,6 @@
 # MegaStack name. All stacks in CF get prefixed with this name.
 ---
-Demo:
+A1:
   Name: &Name A1
   region: &Region ap-southeast-2
   ServicePhase: &ServicePhase Dev
@@ -16,7 +16,7 @@ Demo:
   DatabaseB: &DatabaseB 10.0.131.0/24
 
   stacks:
-    A1:
+    VPC:
       cf_template: vpc.json
       depends:
       params:
@@ -27,7 +27,7 @@ Demo:
     SubnetAzA:
       cf_template: subnet.json
       depends:
-        - Shared
+        - VPC
       params:
         AvailabilityZone:
           value: A
@@ -36,19 +36,19 @@ Demo:
           type: resource
           variable: VPC
         ExternalRouteTable:
-          source: Shared
+          source: VPC
           type: resource
           variable: ExternalRouteTable
         InternalRouteTable:
-          source: Shared
+          source: VPC
           type: resource
           variable: InternalRouteTable
         ExternalAcl:
-          source: Shared
+          source: VPC
           type: resource
           variable: ExternalAcl
         InternalAcl:
-          source: Shared
+          source: VPC
           type: resource
           variable: InternalAcl
         ExternalCIDR:
@@ -64,7 +64,7 @@ Demo:
     SubnetAzB:
       cf_template: subnet.json
       depends:
-        - Shared
+        - VPC
       params:
         AvailabilityZone:
           value: B
@@ -73,19 +73,19 @@ Demo:
           type: resource
           variable: VPC
         ExternalRouteTable:
-          source: Shared
+          source: VPC
           type: resource
           variable: ExternalRouteTable
         InternalRouteTable:
-          source: Shared
+          source: VPC
           type: resource
           variable: InternalRouteTable
         ExternalAcl:
-          source: Shared
+          source: VPC
           type: resource
           variable: ExternalAcl
         InternalAcl:
-          source: Shared
+          source: VPC
           type: resource
           variable: InternalAcl
         ExternalCIDR:
@@ -98,7 +98,7 @@ Demo:
           value: *DatabaseB
         ServicePhase:
           value: *ServicePhase
-    NatA:
+    NAT:
       cf_template: nat.json
       depends:
         - SubnetAzA
@@ -114,13 +114,13 @@ Demo:
           type: resource
           variable: ExternalSubnet
         InternalRouteTable:
-          source: Shared
+          source: VPC
           type: resource
           variable: InternalRouteTable
         KeyName:
           value: *KeyName
-    LAMP:
-      cf_template: lamp.json
+    App:
+      cf_template: app.json
       depends:
         - SubnetAzA
         - SubnetAzB
