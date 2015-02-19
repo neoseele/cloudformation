@@ -1,7 +1,7 @@
 # MegaStack name. All stacks in CF get prefixed with this name.
 ---
 A1:
-  Name: &Name A1
+  VpcName: &VpcName A1
   region: &Region ap-southeast-2
   ServicePhase: &ServicePhase Dev
   KeyName: &KeyName nmiao
@@ -17,25 +17,33 @@ A1:
   ServerAccess: &ServerAccess 115.64.236.212/32
 
   stacks:
+
+    # Common bits to setup a VPC
     Common:
       cf_template: common.json
       depends:
       params:
-        CIDR:
+        VpcName:
+          value: *VpcName
+        Cidr:
           value: *VpcCidrRange
         ServicePhase:
           value: *ServicePhase
-    SubnetAzA:
+        ServerAccess:
+          value: *ServerAccess
+
+    # Subnets in availabilityzone A
+    SubnetA:
       cf_template: subnet.json
       depends:
         - Common
       params:
         AvailabilityZone:
           value: A
-        VPC:
+        Vpc:
           source: Common
           type: resource
-          variable: VPC
+          variable: Vpc
         ExternalRouteTable:
           source: Common
           type: resource
@@ -52,35 +60,35 @@ A1:
           source: Common
           type: resource
           variable: InternalAcl
-        NATSecurityGroup:
+        NatSecurityGroup:
           source: Common
           type: resource
-          variable: NATSecurityGroup
-        ExternalCIDR:
+          variable: NatSecurityGroup
+        ExternalCidr:
           value: *ExternalA
-        ExternalLoadBalancerCIDR:
+        ExternalLoadBalancerCidr:
           value: *ExternalLoadBalancerA
-        ApplicationCIDR:
+        ApplicationCidr:
           value: *ApplicationA
-        DatabaseCIDR:
+        DatabaseCidr:
           value: *DatabaseA
         ServicePhase:
           value: *ServicePhase
-        ServerAccess:
-          value: *ServerAccess
         KeyName:
           value: *KeyName
-    SubnetAzB:
+
+    # Subnets in availabilityzone B
+    SubnetB:
       cf_template: subnet.json
       depends:
         - Common
       params:
         AvailabilityZone:
           value: B
-        VPC:
+        Vpc:
           source: Common
           type: resource
-          variable: VPC
+          variable: Vpc
         ExternalRouteTable:
           source: Common
           type: resource
@@ -97,78 +105,80 @@ A1:
           source: Common
           type: resource
           variable: InternalAcl
-        NATSecurityGroup:
+        NatSecurityGroup:
           source: Common
           type: resource
-          variable: NATSecurityGroup
-        ExternalCIDR:
+          variable: NatSecurityGroup
+        ExternalCidr:
           value: *ExternalB
-        ExternalLoadBalancerCIDR:
+        ExternalLoadBalancerCidr:
           value: *ExternalLoadBalancerB
-        ApplicationCIDR:
+        ApplicationCidr:
           value: *ApplicationB
-        DatabaseCIDR:
+        DatabaseCidr:
           value: *DatabaseB
         ServicePhase:
           value: *ServicePhase
-        ServerAccess:
-          value: *ServerAccess
         KeyName:
           value: *KeyName
-    Shared:
-      cf_template: shared.json
+
+    # Misc
+    Misc:
+      cf_template: misc.json
       depends:
-        - SubnetAzA
+        - SubnetA
       params:
-        VPC:
+        Vpc:
           source: Common
           type: resource
-          variable: VPC
-        NATInstance:
-          source: SubnetAzA
+          variable: Vpc
+        NatInstance:
+          source: SubnetA
           type: resource
-          variable: NATInstance
+          variable: NatInstance
         InternalRouteTable:
           source: Common
           type: resource
           variable: InternalRouteTable
         ServicePhase:
           value: *ServicePhase
+
     App:
       cf_template: app.json
       depends:
-        - SubnetAzA
-        - SubnetAzB
+        - SubnetA
+        - SubnetB
+        - Misc
       params:
-        Common:
+        Vpc:
           source: Common
           type: resource
-          variable: Common
+          variable: Vpc
+        NatSecurityGroup:
+          source: Common
+          type: resource
+          variable: NatSecurityGroup
         LoadBalancerSubnets:
-          - source: SubnetAzA
+          - source: SubnetA
             type: resource
             variable: ExternalLoadBalancerSubnet
-          - source: SubnetAzB
+          - source: SubnetB
             type: resource
             variable: ExternalLoadBalancerSubnet
         DatabaseSubnets:
-          - source: SubnetAzA
+          - source: SubnetA
             type: resource
             variable: DatabaseSubnet
-          - source: SubnetAzB
+          - source: SubnetB
             type: resource
             variable: DatabaseSubnet
         ApplicationSubnets:
-          - source: SubnetAzA
+          - source: SubnetA
             type: resource
             variable: ApplicationSubnet
-          - source: SubnetAzB
+          - source: SubnetB
             type: resource
             variable: ApplicationSubnet
-        NATSecurityGroup:
-          source: NAT
-          type: resource
-          variable: NATSecurityGroup
         DBName:
           value: drupal
         DBUser:

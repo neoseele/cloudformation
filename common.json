@@ -2,12 +2,25 @@
     "AWSTemplateFormatVersion": "2010-09-09",
     "Description": "VPC Common",
     "Parameters": {
-        "CIDR": {
+        "VpcName": {
+            "Description": "VPC Name",
+            "Type": "String"
+        },
+        "Cidr": {
             "Description": "VPC IP range",
             "Type": "String"
         },
         "ServicePhase": {
             "Description": "",
+            "Type": "String"
+        },
+        "ServerAccess": {
+            "AllowedPattern": "(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})/(\\d{1,2})",
+            "ConstraintDescription": "must be a valid CIDR range of the form x.x.x.x/x.",
+            "Default": "0.0.0.0/0",
+            "Description": "CIDR IP range allowed to login to the NAT instance",
+            "MaxLength": "18",
+            "MinLength": "9",
             "Type": "String"
         }
     },
@@ -35,7 +48,7 @@
                     }
                 ],
                 "VpcId": {
-                    "Ref": "VPC"
+                    "Ref": "Vpc"
                 }
             },
             "Type": "AWS::EC2::NetworkAcl"
@@ -109,7 +122,7 @@
                     }
                 ],
                 "VpcId": {
-                    "Ref": "VPC"
+                    "Ref": "Vpc"
                 }
             },
             "Type": "AWS::EC2::RouteTable"
@@ -120,7 +133,7 @@
                     "Ref": "InternetGateway"
                 },
                 "VpcId": {
-                    "Ref": "VPC"
+                    "Ref": "Vpc"
                 }
             },
             "Type": "AWS::EC2::VPCGatewayAttachment"
@@ -148,7 +161,7 @@
                     }
                 ],
                 "VpcId": {
-                    "Ref": "VPC"
+                    "Ref": "Vpc"
                 }
             },
             "Type": "AWS::EC2::NetworkAcl"
@@ -210,7 +223,7 @@
                     }
                 ],
                 "VpcId": {
-                    "Ref": "VPC"
+                    "Ref": "Vpc"
                 }
             },
             "Type": "AWS::EC2::RouteTable"
@@ -240,7 +253,7 @@
             },
             "Type": "AWS::EC2::InternetGateway"
         },
-        "NATSecurityGroup": {
+        "NatSecurityGroup": {
             "Properties": {
                 "GroupDescription": "NAT Security Group",
                 "SecurityGroupIngress": [
@@ -264,7 +277,7 @@
                 "Tags": [
                     {
                         "Key": "Name",
-                        "Value": "NATSecurityGroup"
+                        "Value": "NatSecurityGroup"
                     },
                     {
                         "Key": "ServiceComponent",
@@ -272,7 +285,7 @@
                     },
                     {
                         "Key": "ServiceName",
-                        "Value": "NATSecurityGroup"
+                        "Value": "NatSecurityGroup"
                     },
                     {
                         "Key": "ServicePhase",
@@ -282,106 +295,106 @@
                     }
                 ],
                 "VpcId": {
-                    "Ref": "VPC"
+                    "Ref": "Vpc"
                 }
             },
             "Type": "AWS::EC2::SecurityGroup"
         },
-        "NATSecurityGroupIngress1": {
+        "NatSecurityGroupIngress1": {
             "DependsOn": [
-                "NATSecurityGroup"
+                "NatSecurityGroup"
             ],
             "Properties": {
                 "FromPort": "-1",
                 "GroupId": {
-                    "Ref": "NATSecurityGroup"
+                    "Ref": "NatSecurityGroup"
                 },
                 "IpProtocol": "icmp",
                 "SourceSecurityGroupId": {
-                    "Ref": "NATSecurityGroup"
+                    "Ref": "NatSecurityGroup"
                 },
                 "ToPort": "-1"
             },
             "Type": "AWS::EC2::SecurityGroupIngress"
         },
-        "NATSecurityGroupIngress22": {
+        "NatSecurityGroupIngress22": {
             "DependsOn": [
-                "NATSecurityGroup"
+                "NatSecurityGroup"
             ],
             "Properties": {
                 "FromPort": "22",
                 "GroupId": {
-                    "Ref": "NATSecurityGroup"
+                    "Ref": "NatSecurityGroup"
                 },
                 "IpProtocol": "tcp",
                 "SourceSecurityGroupId": {
-                    "Ref": "NATSecurityGroup"
+                    "Ref": "NatSecurityGroup"
                 },
                 "ToPort": "22"
             },
             "Type": "AWS::EC2::SecurityGroupIngress"
         },
-        "NATSecurityGroupIngress3389": {
+        "NatSecurityGroupIngress3389": {
             "DependsOn": [
-                "NATSecurityGroup"
+                "NatSecurityGroup"
             ],
             "Properties": {
                 "FromPort": "3389",
                 "GroupId": {
-                    "Ref": "NATSecurityGroup"
+                    "Ref": "NatSecurityGroup"
                 },
                 "IpProtocol": "tcp",
                 "SourceSecurityGroupId": {
-                    "Ref": "NATSecurityGroup"
+                    "Ref": "NatSecurityGroup"
                 },
                 "ToPort": "3389"
             },
             "Type": "AWS::EC2::SecurityGroupIngress"
         },
-        "NATSecurityGroupIngress443": {
+        "NatSecurityGroupIngress443": {
             "DependsOn": [
-                "NATSecurityGroup"
+                "NatSecurityGroup"
             ],
             "Properties": {
                 "FromPort": "443",
                 "GroupId": {
-                    "Ref": "NATSecurityGroup"
+                    "Ref": "NatSecurityGroup"
                 },
                 "IpProtocol": "tcp",
                 "SourceSecurityGroupId": {
-                    "Ref": "NATSecurityGroup"
+                    "Ref": "NatSecurityGroup"
                 },
                 "ToPort": "443"
             },
             "Type": "AWS::EC2::SecurityGroupIngress"
         },
-        "NATSecurityGroupIngress80": {
+        "NatSecurityGroupIngress80": {
             "DependsOn": [
-                "NATSecurityGroup"
+                "NatSecurityGroup"
             ],
             "Properties": {
                 "FromPort": "80",
                 "GroupId": {
-                    "Ref": "NATSecurityGroup"
+                    "Ref": "NatSecurityGroup"
                 },
                 "IpProtocol": "tcp",
                 "SourceSecurityGroupId": {
-                    "Ref": "NATSecurityGroup"
+                    "Ref": "NatSecurityGroup"
                 },
                 "ToPort": "80"
             },
             "Type": "AWS::EC2::SecurityGroupIngress"
         },
-        "VPC": {
+        "Vpc": {
             "Properties": {
                 "CidrBlock": {
-                    "Ref": "CIDR"
+                    "Ref": "Cidr"
                 },
                 "Tags": [
                     {
                         "Key": "Name",
                         "Value": {
-                            "Ref": "AWS::StackName"
+                            "Ref": "VpcName"
                         }
                     },
                     {
@@ -390,7 +403,7 @@
                     },
                     {
                         "Key": "ServiceName",
-                        "Value": "VPC"
+                        "Value": "Vpc"
                     },
                     {
                         "Key": "ServicePhase",

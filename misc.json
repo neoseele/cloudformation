@@ -6,7 +6,7 @@
             "Description": "",
             "Type": "String"
         },
-        "NATInstance": {
+        "NatInstance": {
             "Description": "",
             "Type": "String"
         },
@@ -14,8 +14,8 @@
             "Description": "",
             "Type": "String"
         },
-        "VPC": {
-            "Description": "VPC",
+        "Vpc": {
+            "Description": "",
             "Type": "String"
         }
     },
@@ -24,7 +24,7 @@
             "Properties": {
                 "DestinationCidrBlock": "0.0.0.0/0",
                 "InstanceId": {
-                    "Ref": "NATInstance"
+                    "Ref": "NatInstance"
                 },
                 "RouteTableId": {
                     "Ref": "InternalRouteTable"

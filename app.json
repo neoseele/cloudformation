@@ -345,8 +345,8 @@
             "Description": "",
             "Type": "String"
         },
-        "VPC": {
-            "Description": "VPC",
+        "Vpc": {
+            "Description": "",
             "Type": "String"
         },
         "WebServerCapacity": {
@@ -373,7 +373,7 @@
                     }
                 ],
                 "VpcId": {
-                    "Ref": "VPC"
+                    "Ref": "Vpc"
                 }
             },
             "Type": "AWS::EC2::SecurityGroup"
@@ -677,7 +677,7 @@
                     }
                 ],
                 "VpcId": {
-                    "Ref": "VPC"
+                    "Ref": "Vpc"
                 }
             },
             "Type": "AWS::EC2::SecurityGroup"
@@ -770,7 +770,7 @@
                     }
                 ],
                 "VpcId": {
-                    "Ref": "VPC"
+                    "Ref": "Vpc"
                 }
             },
             "Type": "AWS::EC2::SecurityGroup"
