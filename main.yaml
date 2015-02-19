@@ -1,7 +1,7 @@
 # MegaStack name. All stacks in CF get prefixed with this name.
 ---
 Demo:
-  Name: &Name Vpc1
+  Name: &Name A1
   region: &Region ap-southeast-2
   ServicePhase: &ServicePhase Dev
   KeyName: &KeyName nmiao
@@ -16,7 +16,7 @@ Demo:
   DatabaseB: &DatabaseB 10.0.131.0/24
 
   stacks:
-    VPC:
+    A1:
       cf_template: vpc.json
       depends:
       params:
@@ -24,15 +24,6 @@ Demo:
           value: *VpcCidrRange
         ServicePhase:
           value: *ServicePhase
-    Shared:
-      cf_template: shared.json
-      depends:
-        - VPC
-      params:
-        VPC:
-          source: VPC
-          type: resource
-          variable: VPC
     SubnetAzA:
       cf_template: subnet.json
       depends:

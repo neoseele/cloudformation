@@ -107,30 +107,31 @@
                 },
                 "Tags": [
                     {
-                        "Key": "Applicationlication",
-                        "Value": {
-                            "Ref": "AWS::StackName"
-                        }
-                    },
-                    {
-                        "Key": "Network",
-                        "Value": "Application"
-                    },
-                    {
                         "Key": "Name",
                         "Value": {
-                            "Fn::Join": [
+                            "Fn:Join": [
                                 "",
                                 [
-                                    {
-                                        "Ref": "ServicePhase"
-                                    },
-                                    "Application",
+                                    "ApplicationSubnet",
                                     {
                                         "Ref": "AvailabilityZone"
                                     }
                                 ]
                             ]
+                        }
+                    },
+                    {
+                        "Key": "ServiceComponent",
+                        "Value": "Network"
+                    },
+                    {
+                        "Key": "ServiceName",
+                        "Value": "ApplicationSubnet"
+                    },
+                    {
+                        "Key": "ServicePhase",
+                        "Value": {
+                            "Ref": "ServicePhase"
                         }
                     }
                 ],
@@ -187,33 +188,34 @@
                     "Ref": "DatabaseCIDR"
                 },
                 "Tags": [
-                    {
-                        "Key": "Applicationlication",
-                        "Value": {
-                            "Ref": "AWS::StackName"
-                        }
-                    },
-                    {
-                        "Key": "Network",
-                        "Value": "Application"
-                    },
-                    {
-                        "Key": "Name",
-                        "Value": {
-                            "Fn::Join": [
-                                "",
-                                [
-                                    {
-                                        "Ref": "ServicePhase"
-                                    },
-                                    "Database",
-                                    {
-                                        "Ref": "AvailabilityZone"
-                                    }
-                                ]
-                            ]
-                        }
-                    }
+                  {
+                      "Key": "Name",
+                      "Value": {
+                          "Fn:Join": [
+                              "",
+                              [
+                                  "DatabaseSubnet",
+                                  {
+                                      "Ref": "AvailabilityZone"
+                                  }
+                              ]
+                          ]
+                      }
+                  },
+                  {
+                      "Key": "ServiceComponent",
+                      "Value": "Network"
+                  },
+                  {
+                      "Key": "ServiceName",
+                      "Value": "DatabaseSubnet"
+                  },
+                  {
+                      "Key": "ServicePhase",
+                      "Value": {
+                          "Ref": "ServicePhase"
+                      }
+                  }
                 ],
                 "VpcId": {
                     "Ref": "VPC"
@@ -257,33 +259,34 @@
                     "Ref": "ExternalLoadBalancerCIDR"
                 },
                 "Tags": [
-                    {
-                        "Key": "Applicationlication",
-                        "Value": {
-                            "Ref": "AWS::StackName"
-                        }
-                    },
-                    {
-                        "Key": "Network",
-                        "Value": "External"
-                    },
-                    {
-                        "Key": "Name",
-                        "Value": {
-                            "Fn::Join": [
-                                "",
-                                [
-                                    {
-                                        "Ref": "ServicePhase"
-                                    },
-                                    "ExternalLoadBalancer",
-                                    {
-                                        "Ref": "AvailabilityZone"
-                                    }
-                                ]
-                            ]
-                        }
-                    }
+                  {
+                      "Key": "Name",
+                      "Value": {
+                          "Fn:Join": [
+                              "",
+                              [
+                                  "ExternalLoadBalancerSubnet",
+                                  {
+                                      "Ref": "AvailabilityZone"
+                                  }
+                              ]
+                          ]
+                      }
+                  },
+                  {
+                      "Key": "ServiceComponent",
+                      "Value": "Network"
+                  },
+                  {
+                      "Key": "ServiceName",
+                      "Value": "ExternalLoadBalancerSubnet"
+                  },
+                  {
+                      "Key": "ServicePhase",
+                      "Value": {
+                          "Ref": "ServicePhase"
+                      }
+                  }
                 ],
                 "VpcId": {
                     "Ref": "VPC"
@@ -327,35 +330,34 @@
                     "Ref": "ExternalCIDR"
                 },
                 "Tags": [
-                    {
-                        "Key": "Applicationlication",
-                        "Value": {
-                            "Ref": "AWS::StackName"
-                        }
-                    },
-                    {
-                        "Key": "ServicePhase",
-                        "Value": {
-                            "Ref": "ServicePhase"
-                        }
-                    },
-                    {
-                        "Key": "Name",
-                        "Value": {
-                            "Fn::Join": [
-                                "",
-                                [
-                                    {
-                                        "Ref": "ServicePhase"
-                                    },
-                                    "External",
-                                    {
-                                        "Ref": "AvailabilityZone"
-                                    }
-                                ]
-                            ]
-                        }
-                    }
+                  {
+                      "Key": "Name",
+                      "Value": {
+                          "Fn:Join": [
+                              "",
+                              [
+                                  "ExternalSubnet",
+                                  {
+                                      "Ref": "AvailabilityZone"
+                                  }
+                              ]
+                          ]
+                      }
+                  },
+                  {
+                      "Key": "ServiceComponent",
+                      "Value": "Network"
+                  },
+                  {
+                      "Key": "ServiceName",
+                      "Value": "ExternalSubnet"
+                  },
+                  {
+                      "Key": "ServicePhase",
+                      "Value": {
+                          "Ref": "ServicePhase"
+                      }
+                  }
                 ],
                 "VpcId": {
                     "Ref": "VPC"

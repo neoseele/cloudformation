@@ -6,12 +6,244 @@
             "Description": "VPC IP range",
             "Type": "String"
         },
-        "Environment": {
-            "Description": "VPC's Environment",
+        "ServicePhase": {
+            "Description": "",
             "Type": "String"
         }
     },
     "Resources": {
+        "ExternalAcl": {
+            "Properties": {
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "ExternalAcl"
+                    },
+                    {
+                        "Key": "ServiceComponent",
+                        "Value": "Network"
+                    },
+                    {
+                        "Key": "ServiceName",
+                        "Value": "ExternalAcl"
+                    },
+                    {
+                        "Key": "ServicePhase",
+                        "Value": {
+                            "Ref": "ServicePhase"
+                        }
+                    }
+                ],
+                "VpcId": {
+                    "Ref": "VPC"
+                }
+            },
+            "Type": "AWS::EC2::NetworkAcl"
+        },
+        "ExternalAclEg100": {
+            "Properties": {
+                "CidrBlock": "0.0.0.0/0",
+                "Egress": "True",
+                "NetworkAclId": {
+                    "Ref": "ExternalAcl"
+                },
+                "PortRange": {
+                    "From": "0",
+                    "To": "65535"
+                },
+                "Protocol": "-1",
+                "RuleAction": "Allow",
+                "RuleNumber": "100"
+            },
+            "Type": "AWS::EC2::NetworkAclEntry"
+        },
+        "ExternalAclIg100": {
+            "Properties": {
+                "CidrBlock": "0.0.0.0/0",
+                "Egress": "False",
+                "NetworkAclId": {
+                    "Ref": "ExternalAcl"
+                },
+                "PortRange": {
+                    "From": "0",
+                    "To": "65535"
+                },
+                "Protocol": "-1",
+                "RuleAction": "Allow",
+                "RuleNumber": "100"
+            },
+            "Type": "AWS::EC2::NetworkAclEntry"
+        },
+        "ExternalRoute": {
+            "DependsOn": [
+                "ExternalRouteTable",
+                "InternetGateway"
+            ],
+            "Properties": {
+                "DestinationCidrBlock": "0.0.0.0/0",
+                "GatewayId": {
+                    "Ref": "InternetGateway"
+                },
+                "RouteTableId": {
+                    "Ref": "ExternalRouteTable"
+                }
+            },
+            "Type": "AWS::EC2::Route"
+        },
+        "ExternalRouteTable": {
+            "Properties": {
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "ExternalRouteTable"
+                    },
+                    {
+                        "Key": "ServiceComponent",
+                        "Value": "Network"
+                    },
+                    {
+                        "Key": "ServiceName",
+                        "Value": "ExternalRouteTable"
+                    },
+                    {
+                        "Key": "ServicePhase",
+                        "Value": {
+                            "Ref": "ServicePhase"
+                        }
+                    }
+                ],
+                "VpcId": {
+                    "Ref": "VPC"
+                }
+            },
+            "Type": "AWS::EC2::RouteTable"
+        },
+        "GatewayToInternet": {
+            "Properties": {
+                "InternetGatewayId": {
+                    "Ref": "InternetGateway"
+                },
+                "VpcId": {
+                    "Ref": "VPC"
+                }
+            },
+            "Type": "AWS::EC2::VPCGatewayAttachment"
+        },
+        "InternalAcl": {
+            "Properties": {
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "InternalAcl"
+                    },
+                    {
+                        "Key": "ServiceComponent",
+                        "Value": "Network"
+                    },
+                    {
+                        "Key": "ServiceName",
+                        "Value": "InternalAcl"
+                    },
+                    {
+                        "Key": "ServicePhase",
+                        "Value": {
+                            "Ref": "ServicePhase"
+                        }
+                    }
+                ],
+                "VpcId": {
+                    "Ref": "VPC"
+                }
+            },
+            "Type": "AWS::EC2::NetworkAcl"
+        },
+        "InternalAclEg100": {
+            "Properties": {
+                "CidrBlock": "0.0.0.0/0",
+                "Egress": "True",
+                "NetworkAclId": {
+                    "Ref": "InternalAcl"
+                },
+                "PortRange": {
+                    "From": "0",
+                    "To": "65535"
+                },
+                "Protocol": "-1",
+                "RuleAction": "Allow",
+                "RuleNumber": "100"
+            },
+            "Type": "AWS::EC2::NetworkAclEntry"
+        },
+        "InternalAclIg100": {
+            "Properties": {
+                "CidrBlock": "0.0.0.0/0",
+                "Egress": "False",
+                "NetworkAclId": {
+                    "Ref": "InternalAcl"
+                },
+                "PortRange": {
+                    "From": "0",
+                    "To": "65535"
+                },
+                "Protocol": "-1",
+                "RuleAction": "Allow",
+                "RuleNumber": "100"
+            },
+            "Type": "AWS::EC2::NetworkAclEntry"
+        },
+        "InternalRouteTable": {
+            "Properties": {
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "InternalRouteTable"
+                    },
+                    {
+                        "Key": "ServiceComponent",
+                        "Value": "Network"
+                    },
+                    {
+                        "Key": "ServiceName",
+                        "Value": "InternalRouteTable"
+                    },
+                    {
+                        "Key": "ServicePhase",
+                        "Value": {
+                            "Ref": "ServicePhase"
+                        }
+                    }
+                ],
+                "VpcId": {
+                    "Ref": "VPC"
+                }
+            },
+            "Type": "AWS::EC2::RouteTable"
+        },
+        "InternetGateway": {
+            "Properties": {
+                "Tags": [
+                    {
+                        "Key": "Name",
+                        "Value": "InternetGateway"
+                    },
+                    {
+                        "Key": "ServiceComponent",
+                        "Value": "Network"
+                    },
+                    {
+                        "Key": "ServiceName",
+                        "Value": "InternetGateway"
+                    },
+                    {
+                        "Key": "ServicePhase",
+                        "Value": {
+                            "Ref": "ServicePhase"
+                        }
+                    }
+                ]
+            },
+            "Type": "AWS::EC2::InternetGateway"
+        },
         "VPC": {
             "Properties": {
                 "CidrBlock": {
@@ -19,29 +251,21 @@
                 },
                 "Tags": [
                     {
-                        "Key": "Application",
-                        "Value": {
-                            "Ref": "AWS::StackName"
-                        }
-                    },
-                    {
-                        "Key": "Environment",
-                        "Value": {
-                            "Ref": "Environment"
-                        }
-                    },
-                    {
                         "Key": "Name",
+                        "Value": "AWS::StackName"
+                    },
+                    {
+                        "Key": "ServiceComponent",
+                        "Value": "Network"
+                    },
+                    {
+                        "Key": "ServiceName",
+                        "Value": "VPC"
+                    },
+                    {
+                        "Key": "ServicePhase",
                         "Value": {
-                            "Fn::Join": [
-                                "",
-                                [
-                                    {
-                                        "Ref": "Environment"
-                                    },
-                                    "VPC"
-                                ]
-                            ]
+                            "Ref": "ServicePhase"
                         }
                     }
                 ]
