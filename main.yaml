@@ -3,7 +3,7 @@
 Demo:
   Name: &Name Vpc1
   region: &Region ap-southeast-2
-  Environment: &Environment Dev
+  ServicePhase: &ServicePhase Dev
   KeyName: &KeyName nmiao
   VpcCidrRange: &VpcCidrRange 10.0.0.0/16
   ExternalLoadBalancerA: &ExternalLoadBalancerA 10.0.0.0/24
@@ -22,8 +22,8 @@ Demo:
       params:
         CIDR:
           value: *VpcCidrRange
-        Environment:
-          value: *Environment
+        ServicePhase:
+          value: *ServicePhase
     Shared:
       cf_template: shared.json
       depends:
@@ -68,10 +68,8 @@ Demo:
           value: *ApplicationA
         DatabaseCIDR:
           value: *DatabaseA
-        Region:
-          value: *Region
-        Environment:
-          value: *Environment
+        ServicePhase:
+          value: *ServicePhase
     SubnetAzB:
       cf_template: subnet.json
       depends:
@@ -107,10 +105,8 @@ Demo:
           value: *ApplicationB
         DatabaseCIDR:
           value: *DatabaseB
-        Region:
-          value: *Region
-        Environment:
-          value: *Environment
+        ServicePhase:
+          value: *ServicePhase
     NatA:
       cf_template: nat.json
       depends:
@@ -156,7 +152,7 @@ Demo:
           - source: SubnetAzB
             type: resource
             variable: DatabaseSubnet
-        VPCZoneIdentifier:
+        ApplicationSubnets:
           - source: SubnetAzA
             type: resource
             variable: ApplicationSubnet

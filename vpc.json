@@ -1,30 +1,52 @@
 {
-  "AWSTemplateFormatVersion" : "2010-09-09",
-
-  "Description" : "VPC",
-
-  "Parameters" : {
-    "CIDR" :  {
-      "Description" : "VPC IP range",
-      "Type" : "String"
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "VPC",
+    "Parameters": {
+        "CIDR": {
+            "Description": "VPC IP range",
+            "Type": "String"
+        },
+        "Environment": {
+            "Description": "VPC's Environment",
+            "Type": "String"
+        }
     },
-    "Environment" : {
-      "Description" : "VPC's Environment",
-      "Type" : "String"
+    "Resources": {
+        "VPC": {
+            "Properties": {
+                "CidrBlock": {
+                    "Ref": "CIDR"
+                },
+                "Tags": [
+                    {
+                        "Key": "Application",
+                        "Value": {
+                            "Ref": "AWS::StackName"
+                        }
+                    },
+                    {
+                        "Key": "Environment",
+                        "Value": {
+                            "Ref": "Environment"
+                        }
+                    },
+                    {
+                        "Key": "Name",
+                        "Value": {
+                            "Fn::Join": [
+                                "",
+                                [
+                                    {
+                                        "Ref": "Environment"
+                                    },
+                                    "VPC"
+                                ]
+                            ]
+                        }
+                    }
+                ]
+            },
+            "Type": "AWS::EC2::VPC"
+        }
     }
-  },
-
-  "Resources" : {
-    "VPC" : {
-      "Type" : "AWS::EC2::VPC",
-      "Properties" : {
-        "CidrBlock" : { "Ref" : "CIDR" },
-        "Tags" : [
-          { "Key" : "Application", "Value" : { "Ref" : "AWS::StackName" } },
-          { "Key" : "Network", "Value" : "Public" },
-          { "Key" : "Name", "Value" : { "Fn::Join" : [ "", [ {"Ref":"Environment"}, "VPC" ] ] } }
-        ]
-      }
-    }
-  }
 }

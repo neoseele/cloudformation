@@ -1,7 +1,7 @@
 {
   "AWSTemplateFormatVersion" : "2010-09-09",
 
-  "Description" : "AWS CloudFormation Sample Template LAMP_Multi_AZ: Create a highly available, scalable LAMP stack with an Amazon RDS database instance for the backend data store. This template demonstrates using the AWS CloudFormation bootstrap scripts to install the packages and files necessary to deploy the Apache web server and PHP at instance launch time. **WARNING** This template creates one or more Amazon EC2 instances, an Elastic Load Balancer and an Amazon RDS DB instance. You will be billed for the AWS resources used if you create a stack from this template.",
+  "Description" : "VPC App",
 
   "Parameters" : {
 
@@ -15,17 +15,17 @@
       "Type" : "CommaDelimitedList"
     },
 
+    "ApplicationSubnets" : {
+      "Description" : "Application subnets",
+      "Type" : "CommaDelimitedList"
+    },
+
     "DatabaseSubnets" : {
       "Description" : "RDS subnets",
       "Type" : "CommaDelimitedList"
     },
 
-    "VPCZoneIdentifier" : {
-      "Description" : "Application subnets",
-      "Type" : "CommaDelimitedList"
-    },
-
-    "NatSecurityGroup" : {
+    "NATSecurityGroup" : {
       "Description" : "",
       "Type" : "String"
     },
@@ -164,8 +164,7 @@
       "hs1.8xlarge" : { "Arch" : "HVM64"  },
       "cr1.8xlarge" : { "Arch" : "HVM64"  },
       "cc2.8xlarge" : { "Arch" : "HVM64"  }
-    }
-,
+    },
     "AWSRegionArch2AMI" : {
       "us-east-1"        : {"PV64" : "ami-8e682ce6", "HVM64" : "ami-146e2a7c", "HVMG2" : "ami-7200461a"},
       "us-west-2"        : {"PV64" : "ami-9fc29baf", "HVM64" : "ami-dfc39aef", "HVMG2" : "ami-0b78203b"},
@@ -378,7 +377,7 @@
         "ImageId" : { "Fn::FindInMap" : [ "AWSRegionArch2AMI", { "Ref" : "AWS::Region" },
                           { "Fn::FindInMap" : [ "AWSInstanceType2Arch", { "Ref" : "InstanceType" }, "Arch" ] } ] },
         "InstanceType" : { "Ref" : "InstanceType" },
-        "SecurityGroups" : [ {"Ref" : "WebServerSecurityGroup"}, {"Ref" : "NatSecurityGroup"} ],
+        "SecurityGroups" : [ {"Ref" : "WebServerSecurityGroup"}, {"Ref" : "NATSecurityGroup"} ],
         "KeyName" : { "Ref" : "KeyName" },
         "UserData" : { "Fn::Base64" : { "Fn::Join" : ["", [
              "#!/bin/bash -xe\n",
@@ -448,7 +447,7 @@
   "Outputs" : {
     "WebsiteURL" : {
       "Description" : "URL for newly created LAMP stack",
-      "Value" : { "Fn::Join" : ["", ["http://", { "Fn::GetAtt" : [ "ElasticLoadBalancer", "DNSName" ]}]] }
+      "Value" : { "Fn::Join" : [ "", [ "http://", { "Fn::GetAtt" : [ "ElasticLoadBalancer", "DNSName" ] } ] ] }
     }
   }
 }

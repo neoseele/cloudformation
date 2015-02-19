@@ -1,185 +1,390 @@
 {
-  "AWSTemplateFormatVersion" : "2010-09-09",
-
-  "Description" : "VPC Subnets",
-
-  "Parameters" : {
-
-    "VPC" : {
-      "Description" : "VPC",
-      "Type" : "String"
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "VPC Subnets",
+    "Mappings": {
+        "Case": {
+            "A": {
+                "Low": "a"
+            },
+            "B": {
+                "Low": "b"
+            },
+            "C": {
+                "Low": "c"
+            },
+            "D": {
+                "Low": "d"
+            }
+        }
     },
-
-    "ExternalCIDR" : {
-      "Description" : "",
-      "Type" : "String"
+    "Parameters": {
+        "ApplicationCIDR": {
+            "Description": "",
+            "Type": "String"
+        },
+        "AvailabilityZone": {
+            "Description": "",
+            "Type": "String"
+        },
+        "DatabaseCIDR": {
+            "Description": "",
+            "Type": "String"
+        },
+        "ExternalAcl": {
+            "Description": "",
+            "Type": "String"
+        },
+        "ExternalCIDR": {
+            "Description": "",
+            "Type": "String"
+        },
+        "ExternalLoadBalancerCIDR": {
+            "Description": "",
+            "Type": "String"
+        },
+        "ExternalRouteTable": {
+            "Description": "",
+            "Type": "String"
+        },
+        "InternalAcl": {
+            "Description": "",
+            "Type": "String"
+        },
+        "InternalRouteTable": {
+            "Description": "",
+            "Type": "String"
+        },
+        "KeyName": {
+            "AllowedPattern": "[-_ a-zA-Z0-9]*",
+            "ConstraintDescription": "can contain only alphanumeric characters, spaces, dashes and underscores.",
+            "Description": "Name of an existing EC2 KeyPair (find or create here: https://console.aws.amazon.com/ec2/v2/home#KeyPairs: )",
+            "MaxLength": "64",
+            "MinLength": "1",
+            "Type": "String"
+        },
+        "ServerAccess": {
+            "AllowedPattern": "(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})/(\\d{1,2})",
+            "ConstraintDescription": "must be a valid CIDR range of the form x.x.x.x/x.",
+            "Default": "0.0.0.0/0",
+            "Description": "CIDR IP range allowed to login to the NAT instance",
+            "MaxLength": "18",
+            "MinLength": "9",
+            "Type": "String"
+        },
+        "ServicePhase": {
+            "Description": "",
+            "Type": "String"
+        },
+        "VPC": {
+            "Description": "VPC",
+            "Type": "String"
+        }
     },
+    "Resources": {
+        "ApplicationSubnet": {
+            "Properties": {
+                "AvailabilityZone": {
+                    "Fn::Join": [
+                        "",
+                        [
+                            {
+                                "Ref": "AWS::Region"
+                            },
+                            {
+                                "Fn::FindInMap": [
+                                    "Case",
+                                    {
+                                        "Ref": "AvailabilityZone"
+                                    },
+                                    "Low"
+                                ]
+                            }
+                        ]
+                    ]
+                },
+                "CidrBlock": {
+                    "Ref": "ApplicationCIDR"
+                },
+                "Tags": [
+                    {
+                        "Key": "Applicationlication",
+                        "Value": {
+                            "Ref": "AWS::StackName"
+                        }
+                    },
+                    {
+                        "Key": "Network",
+                        "Value": "Application"
+                    },
+                    {
+                        "Key": "Name",
+                        "Value": {
+                            "Fn::Join": [
+                                "",
+                                [
+                                    {
+                                        "Ref": "ServicePhase"
+                                    },
+                                    "Application",
+                                    {
+                                        "Ref": "AvailabilityZone"
+                                    }
+                                ]
+                            ]
+                        }
+                    }
+                ],
+                "VpcId": {
+                    "Ref": "VPC"
+                }
+            },
+            "Type": "AWS::EC2::Subnet"
+        },
+        "ApplicationSubnetAclAssociation": {
+            "Properties": {
+                "NetworkAclId": {
+                    "Ref": "InternalAcl"
+                },
+                "SubnetId": {
+                    "Ref": "ApplicationSubnet"
+                }
+            },
+            "Type": "AWS::EC2::SubnetNetworkAclAssociation"
+        },
+        "ApplicationSubnetRouteTableAssociation": {
+            "Properties": {
+                "RouteTableId": {
+                    "Ref": "InternalRouteTable"
+                },
+                "SubnetId": {
+                    "Ref": "ApplicationSubnet"
+                }
+            },
+            "Type": "AWS::EC2::SubnetRouteTableAssociation"
+        },
+        "DatabaseSubnet": {
+            "Properties": {
+                "AvailabilityZone": {
+                    "Fn::Join": [
+                        "",
+                        [
+                            {
+                                "Ref": "AWS::Region"
+                            },
+                            {
+                                "Fn::FindInMap": [
+                                    "Case",
+                                    {
+                                        "Ref": "AvailabilityZone"
+                                    },
+                                    "Low"
+                                ]
+                            }
+                        ]
+                    ]
+                },
+                "CidrBlock": {
+                    "Ref": "DatabaseCIDR"
+                },
+                "Tags": [
+                    {
+                        "Key": "Applicationlication",
+                        "Value": {
+                            "Ref": "AWS::StackName"
+                        }
+                    },
+                    {
+                        "Key": "Network",
+                        "Value": "Application"
+                    },
+                    {
+                        "Key": "Name",
+                        "Value": {
+                            "Fn::Join": [
+                                "",
+                                [
+                                    {
+                                        "Ref": "ServicePhase"
+                                    },
+                                    "Database",
+                                    {
+                                        "Ref": "AvailabilityZone"
+                                    }
+                                ]
+                            ]
+                        }
+                    }
+                ],
+                "VpcId": {
+                    "Ref": "VPC"
+                }
+            },
+            "Type": "AWS::EC2::Subnet"
+        },
+        "DatabaseSubnetRouteTableAssociation": {
+            "Properties": {
+                "RouteTableId": {
+                    "Ref": "InternalRouteTable"
+                },
+                "SubnetId": {
+                    "Ref": "DatabaseSubnet"
+                }
+            },
+            "Type": "AWS::EC2::SubnetRouteTableAssociation"
+        },
+        "ExternalLoadBalancerSubnet": {
+            "Properties": {
+                "AvailabilityZone": {
+                    "Fn::Join": [
+                        "",
+                        [
+                            {
+                                "Ref": "AWS::Region"
+                            },
+                            {
+                                "Fn::FindInMap": [
+                                    "Case",
+                                    {
+                                        "Ref": "AvailabilityZone"
+                                    },
+                                    "Low"
+                                ]
+                            }
+                        ]
+                    ]
+                },
+                "CidrBlock": {
+                    "Ref": "ExternalLoadBalancerCIDR"
+                },
+                "Tags": [
+                    {
+                        "Key": "Applicationlication",
+                        "Value": {
+                            "Ref": "AWS::StackName"
+                        }
+                    },
+                    {
+                        "Key": "Network",
+                        "Value": "External"
+                    },
+                    {
+                        "Key": "Name",
+                        "Value": {
+                            "Fn::Join": [
+                                "",
+                                [
+                                    {
+                                        "Ref": "ServicePhase"
+                                    },
+                                    "ExternalLoadBalancer",
+                                    {
+                                        "Ref": "AvailabilityZone"
+                                    }
+                                ]
+                            ]
+                        }
+                    }
+                ],
+                "VpcId": {
+                    "Ref": "VPC"
+                }
+            },
+            "Type": "AWS::EC2::Subnet"
+        },
+        "ExternalLoadBalancerSubnetRouteTableAssociation": {
+            "Properties": {
+                "RouteTableId": {
+                    "Ref": "ExternalRouteTable"
+                },
+                "SubnetId": {
+                    "Ref": "ExternalLoadBalancerSubnet"
+                }
+            },
+            "Type": "AWS::EC2::SubnetRouteTableAssociation"
+        },
+        "ExternalSubnet": {
+            "Properties": {
+                "AvailabilityZone": {
+                    "Fn::Join": [
+                        "",
+                        [
+                            {
+                                "Ref": "AWS::Region"
+                            },
+                            {
+                                "Fn::FindInMap": [
+                                    "Case",
+                                    {
+                                        "Ref": "AvailabilityZone"
+                                    },
+                                    "Low"
+                                ]
+                            }
+                        ]
+                    ]
+                },
+                "CidrBlock": {
+                    "Ref": "ExternalCIDR"
+                },
+                "Tags": [
+                    {
+                        "Key": "Applicationlication",
+                        "Value": {
+                            "Ref": "AWS::StackName"
+                        }
+                    },
+                    {
+                        "Key": "ServicePhase",
+                        "Value": {
+                            "Ref": "ServicePhase"
+                        }
+                    },
+                    {
+                        "Key": "Name",
+                        "Value": {
+                            "Fn::Join": [
+                                "",
+                                [
+                                    {
+                                        "Ref": "ServicePhase"
+                                    },
+                                    "External",
+                                    {
+                                        "Ref": "AvailabilityZone"
+                                    }
+                                ]
+                            ]
+                        }
+                    }
+                ],
+                "VpcId": {
+                    "Ref": "VPC"
+                }
+            },
+            "Type": "AWS::EC2::Subnet"
+        },
+        "ExternalSubnetAclAssociation": {
+            "Properties": {
+                "NetworkAclId": {
+                    "Ref": "ExternalAcl"
+                },
+                "SubnetId": {
+                    "Ref": "ExternalSubnet"
+                }
+            },
+            "Type": "AWS::EC2::SubnetNetworkAclAssociation"
+        },
+        "ExternalSubnetRouteTableAssociation": {
+            "Properties": {
+                "RouteTableId": {
+                    "Ref": "ExternalRouteTable"
+                },
+                "SubnetId": {
+                    "Ref": "ExternalSubnet"
+                }
+            },
+            "Type": "AWS::EC2::SubnetRouteTableAssociation"
+        }
 
-    "ExternalLoadBalancerCIDR" : {
-      "Description" : "",
-      "Type" : "String"
-    },
-
-    "ApplicationCIDR" : {
-      "Description" : "",
-      "Type" : "String"
-    },
-
-    "DatabaseCIDR" : {
-      "Description" : "",
-      "Type" : "String"
-    },
-
-    "ExternalRouteTable" : {
-      "Description" : "",
-      "Type" : "String"
-    },
-
-    "InternalRouteTable" : {
-      "Description" : "",
-      "Type" : "String"
-    },
-
-    "AvailabilityZone" : {
-      "Description" : "",
-      "Type" : "String"
-    },
-
-    "Region" : {
-      "Description" : "",
-      "Type" : "String"
-    },
-
-    "Environment" : {
-      "Description" : "",
-      "Type" : "String"
     }
-
-    "InternalAcl" : {
-      "Description" : "",
-      "Type" : "String"
-    }
-
-    "ExternalAcl" : {
-      "Description" : "",
-      "Type" : "String"
-    }
-  },
-
-  "Mappings" : {
-    "Case" : {
-      "A" : { "Low" : "a" },
-      "B" : { "Low" : "b" },
-      "C" : { "Low" : "c" },
-      "D" : { "Low" : "d" }
-    }
-  },
-
-  "Resources" : {
-
-    "ExternalSubnet" : {
-      "Type" : "AWS::EC2::Subnet",
-      "Properties" : {
-        "VpcId" : { "Ref" : "VPC" },
-        "AvailabilityZone" : { "Fn::Join" : [ "", [ {"Ref" : "Region"}, { "Fn::FindInMap": [ "Case", {"Ref" : "AvailabilityZone" }, "Low" ] } ]] },
-        "CidrBlock" : { "Ref" : "ExternalCIDR" },
-        "Tags" : [
-          { "Key" : "Applicationlication", "Value" : { "Ref" : "AWS::StackName" } },
-          { "Key" : "Network", "Value" : "External" },
-          { "Key" : "Name", "Value" : { "Fn::Join" : [ "", [ { "Ref" : "Environment" }, "External", { "Ref" : "AvailabilityZone" } ]] }}
-        ]
-      }
-    },
-
-    "ExternalLoadBalancerSubnet" : {
-      "Type" : "AWS::EC2::Subnet",
-      "Properties" : {
-        "VpcId" : { "Ref" : "VPC" },
-        "AvailabilityZone" : { "Fn::Join" : [ "", [ {"Ref" : "Region"}, { "Fn::FindInMap": [ "Case", {"Ref" : "AvailabilityZone" }, "Low" ] } ]] },
-        "CidrBlock" : { "Ref" : "ExternalLoadBalancerCIDR" },
-        "Tags" : [
-          { "Key" : "Applicationlication", "Value" : { "Ref" : "AWS::StackName" } },
-          { "Key" : "Network", "Value" : "External" },
-          { "Key" : "Name", "Value" : { "Fn::Join" : [ "", [ { "Ref" : "Environment" }, "ExternalLoadBalancer", { "Ref" : "AvailabilityZone" } ]] }}
-        ]
-      }
-    },
-
-    "ApplicationSubnet" : {
-      "Type" : "AWS::EC2::Subnet",
-      "Properties" : {
-        "VpcId" : { "Ref" : "VPC" },
-        "AvailabilityZone" : { "Fn::Join" : [ "", [ {"Ref" : "Region"}, { "Fn::FindInMap": [ "Case", {"Ref" : "AvailabilityZone" }, "Low" ] } ]] },
-        "CidrBlock" : { "Ref" : "ApplicationCIDR" },
-        "Tags" : [
-          { "Key" : "Applicationlication", "Value" : { "Ref" : "AWS::StackName" } },
-          { "Key" : "Network", "Value" : "Application" },
-          { "Key" : "Name", "Value" : { "Fn::Join" : [ "", [ { "Ref" : "Environment" }, "Application", { "Ref" : "AvailabilityZone" } ]] }}
-        ]
-      }
-    },
-
-    "DatabaseSubnet" : {
-      "Type" : "AWS::EC2::Subnet",
-      "Properties" : {
-        "VpcId" : { "Ref" : "VPC" },
-        "AvailabilityZone" : { "Fn::Join" : [ "", [ {"Ref" : "Region"}, { "Fn::FindInMap": [ "Case", {"Ref" : "AvailabilityZone" }, "Low" ] } ]] },
-        "CidrBlock" : { "Ref" : "DatabaseCIDR" },
-        "Tags" : [
-          { "Key" : "Applicationlication", "Value" : { "Ref" : "AWS::StackName" } },
-          { "Key" : "Network", "Value" : "Application" },
-          { "Key" : "Name", "Value" : { "Fn::Join" : [ "", [ { "Ref" : "Environment" }, "Database", { "Ref" : "AvailabilityZone" } ]] }}
-        ]
-      }
-    },
-
-    "ExternalSubnetRouteTableAssociation" : {
-      "Type" : "AWS::EC2::SubnetRouteTableAssociation",
-      "Properties" : {
-        "SubnetId" : { "Ref" : "ExternalSubnet" },
-        "RouteTableId" : { "Ref" : "ExternalRouteTable" }
-      }
-    },
-
-    "ExternalLoadBalancerSubnetRouteTableAssociation" : {
-      "Type" : "AWS::EC2::SubnetRouteTableAssociation",
-      "Properties" : {
-        "SubnetId" : { "Ref" : "ExternalLoadBalancerSubnet" },
-        "RouteTableId" : { "Ref" : "ExternalRouteTable" }
-      }
-    },
-
-    "ApplicationSubnetRouteTableAssociation" : {
-      "Type" : "AWS::EC2::SubnetRouteTableAssociation",
-      "Properties" : {
-        "SubnetId" : { "Ref" : "ApplicationSubnet" },
-        "RouteTableId" : { "Ref" : "InternalRouteTable" }
-      }
-    },
-
-    "DatabaseSubnetRouteTableAssociation" : {
-      "Type" : "AWS::EC2::SubnetRouteTableAssociation",
-      "Properties" : {
-        "SubnetId" : { "Ref" : "DatabaseSubnet" },
-        "RouteTableId" : { "Ref" : "InternalRouteTable" }
-      }
-    },
-
-    "ExternalSubnetAclAssociation" : {
-      "Type" : "AWS::EC2::SubnetNetworkAclAssociation",
-      "Properties" : {
-        "SubnetId" : { "Ref" : "ExternalSubnet" },
-        "NetworkAclId" : { "Ref" : "ExternalAcl" }
-      }
-    },
-
-    "ApplicationSubnetAclAssociation" : {
-      "Type" : "AWS::EC2::SubnetNetworkAclAssociation",
-      "Properties" : {
-        "SubnetId" : { "Ref" : "ApplicationSubnet" },
-        "NetworkAclId" : { "Ref" : "InternalAcl" }
-      }
-    }
-
-  }
 }
