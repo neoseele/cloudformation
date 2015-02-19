@@ -1,0 +1,36 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "VPC Shared",
+    "Parameters": {
+        "InternalRouteTable": {
+            "Description": "",
+            "Type": "String"
+        },
+        "NATInstance": {
+            "Description": "",
+            "Type": "String"
+        },
+        "ServicePhase": {
+            "Description": "",
+            "Type": "String"
+        },
+        "VPC": {
+            "Description": "VPC",
+            "Type": "String"
+        }
+    },
+    "Resources": {
+        "InternalRoute": {
+            "Properties": {
+                "DestinationCidrBlock": "0.0.0.0/0",
+                "InstanceId": {
+                    "Ref": "NATInstance"
+                },
+                "RouteTableId": {
+                    "Ref": "InternalRouteTable"
+                }
+            },
+            "Type": "AWS::EC2::Route"
+        }
+    }
+}

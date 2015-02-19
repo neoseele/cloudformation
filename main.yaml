@@ -14,10 +14,11 @@ A1:
   ApplicationB: &ApplicationB 10.0.130.0/24
   DatabaseA: &DatabaseA 10.0.3.0/24
   DatabaseB: &DatabaseB 10.0.131.0/24
+  ServerAccess: &ServerAccess 115.64.236.212/32
 
   stacks:
-    VPC:
-      cf_template: vpc.json
+    Common:
+      cf_template: common.json
       depends:
       params:
         CIDR:
@@ -27,30 +28,34 @@ A1:
     SubnetAzA:
       cf_template: subnet.json
       depends:
-        - VPC
+        - Common
       params:
         AvailabilityZone:
           value: A
         VPC:
-          source: VPC
+          source: Common
           type: resource
           variable: VPC
         ExternalRouteTable:
-          source: VPC
+          source: Common
           type: resource
           variable: ExternalRouteTable
         InternalRouteTable:
-          source: VPC
+          source: Common
           type: resource
           variable: InternalRouteTable
         ExternalAcl:
-          source: VPC
+          source: Common
           type: resource
           variable: ExternalAcl
         InternalAcl:
-          source: VPC
+          source: Common
           type: resource
           variable: InternalAcl
+        NATSecurityGroup:
+          source: Common
+          type: resource
+          variable: NATSecurityGroup
         ExternalCIDR:
           value: *ExternalA
         ExternalLoadBalancerCIDR:
@@ -61,33 +66,41 @@ A1:
           value: *DatabaseA
         ServicePhase:
           value: *ServicePhase
+        ServerAccess:
+          value: *ServerAccess
+        KeyName:
+          value: *KeyName
     SubnetAzB:
       cf_template: subnet.json
       depends:
-        - VPC
+        - Common
       params:
         AvailabilityZone:
           value: B
         VPC:
-          source: VPC
+          source: Common
           type: resource
           variable: VPC
         ExternalRouteTable:
-          source: VPC
+          source: Common
           type: resource
           variable: ExternalRouteTable
         InternalRouteTable:
-          source: VPC
+          source: Common
           type: resource
           variable: InternalRouteTable
         ExternalAcl:
-          source: VPC
+          source: Common
           type: resource
           variable: ExternalAcl
         InternalAcl:
-          source: VPC
+          source: Common
           type: resource
           variable: InternalAcl
+        NATSecurityGroup:
+          source: Common
+          type: resource
+          variable: NATSecurityGroup
         ExternalCIDR:
           value: *ExternalB
         ExternalLoadBalancerCIDR:
@@ -98,37 +111,39 @@ A1:
           value: *DatabaseB
         ServicePhase:
           value: *ServicePhase
-    NAT:
-      cf_template: nat.json
+        ServerAccess:
+          value: *ServerAccess
+        KeyName:
+          value: *KeyName
+    Shared:
+      cf_template: shared.json
       depends:
         - SubnetAzA
       params:
-        AvailabilityZone:
-          value: A
         VPC:
-          source: VPC
+          source: Common
           type: resource
           variable: VPC
-        ExternalSubnet:
+        NATInstance:
           source: SubnetAzA
           type: resource
-          variable: ExternalSubnet
+          variable: NATInstance
         InternalRouteTable:
-          source: VPC
+          source: Common
           type: resource
           variable: InternalRouteTable
-        KeyName:
-          value: *KeyName
+        ServicePhase:
+          value: *ServicePhase
     App:
       cf_template: app.json
       depends:
         - SubnetAzA
         - SubnetAzB
       params:
-        VPC:
-          source: VPC
+        Common:
+          source: Common
           type: resource
-          variable: VPC
+          variable: Common
         LoadBalancerSubnets:
           - source: SubnetAzA
             type: resource
@@ -150,12 +165,10 @@ A1:
           - source: SubnetAzB
             type: resource
             variable: ApplicationSubnet
-        NatSecurityGroup:
-          source: NatA
+        NATSecurityGroup:
+          source: NAT
           type: resource
-          variable: NatSecurityGroup
-        KeyName:
-          value: *KeyName
+          variable: NATSecurityGroup
         DBName:
           value: drupal
         DBUser:
@@ -164,4 +177,8 @@ A1:
           value: drupal123
         MultiAZDatabase:
           value: "false"
+        KeyName:
+          value: *KeyName
+        ServicePhase:
+          value: *ServicePhase
 
