@@ -2,16 +2,8 @@
     "AWSTemplateFormatVersion": "2010-09-09",
     "Description": "VPC Common",
     "Parameters": {
-        "VpcName": {
-            "Description": "VPC Name",
-            "Type": "String"
-        },
         "Cidr": {
             "Description": "VPC IP range",
-            "Type": "String"
-        },
-        "ServicePhase": {
-            "Description": "",
             "Type": "String"
         },
         "ServerAccess": {
@@ -21,6 +13,14 @@
             "Description": "CIDR IP range allowed to login to the NAT instance",
             "MaxLength": "18",
             "MinLength": "9",
+            "Type": "String"
+        },
+        "ServicePhase": {
+            "Description": "",
+            "Type": "String"
+        },
+        "VpcName": {
+            "Description": "VPC Name",
             "Type": "String"
         }
     },

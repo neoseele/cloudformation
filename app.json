@@ -341,7 +341,7 @@
             "Description": "Create a Multi-AZ MySQL Amazon RDS database instance",
             "Type": "String"
         },
-        "NATSecurityGroup": {
+        "NatSecurityGroup": {
             "Description": "",
             "Type": "String"
         },
@@ -618,7 +618,7 @@
                         "Ref": "WebServerSecurityGroup"
                     },
                     {
-                        "Ref": "NATSecurityGroup"
+                        "Ref": "NatSecurityGroup"
                     }
                 ],
                 "UserData": {

@@ -1,6 +1,6 @@
 {
     "AWSTemplateFormatVersion": "2010-09-09",
-    "Description": "VPC Shared",
+    "Description": "VPC Misc",
     "Parameters": {
         "InternalRouteTable": {
             "Description": "",

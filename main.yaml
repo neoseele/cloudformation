@@ -189,6 +189,3 @@ A1:
           value: "false"
         KeyName:
           value: *KeyName
-        ServicePhase:
-          value: *ServicePhase
-
