@@ -1,7 +1,7 @@
 # MegaStack name. All stacks in CF get prefixed with this name.
 ---
 A1:
-  VpcName: &VpcName A1
+  VpcName: &VpcName a1
   region: &Region ap-southeast-2
   ServicePhase: &ServicePhase Dev
   KeyName: &KeyName nmiao
@@ -15,6 +15,7 @@ A1:
   DatabaseA: &DatabaseA 10.0.3.0/24
   DatabaseB: &DatabaseB 10.0.131.0/24
   ServerAccess: &ServerAccess 115.64.236.212/32
+  SystemOperationsBucketName: &SystemOperationsBucketName system-operations
 
   stacks:
 
@@ -31,6 +32,8 @@ A1:
           value: *ServicePhase
         ServerAccess:
           value: *ServerAccess
+        SystemOperationsBucketName:
+          value: *SystemOperationsBucketName
 
     # Subnets in availabilityzone A
     SubnetA:
@@ -76,6 +79,8 @@ A1:
           value: *ServicePhase
         KeyName:
           value: *KeyName
+        SystemOperationsBucketName:
+          value: *SystemOperationsBucketName
 
     # Subnets in availabilityzone B
     SubnetB:
@@ -121,6 +126,8 @@ A1:
           value: *ServicePhase
         KeyName:
           value: *KeyName
+        SystemOperationsBucketName:
+          value: *SystemOperationsBucketName
 
     # Misc
     Misc:

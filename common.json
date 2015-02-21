@@ -19,12 +19,112 @@
             "Description": "",
             "Type": "String"
         },
+        "SystemOperationsBucketName": {
+            "Description": "",
+            "Type": "String"
+        },
         "VpcName": {
             "Description": "VPC Name",
             "Type": "String"
         }
     },
     "Resources": {
+        "DefaultProfile": {
+            "Properties": {
+                "Path": "/",
+                "Roles": [
+                    {
+                        "Ref": "DefaultRole"
+                    }
+                ]
+            },
+            "Type": "AWS::IAM::InstanceProfile"
+        },
+        "DefaultRole": {
+            "Properties": {
+                "AssumeRolePolicyDocument": {
+                    "Statement": [
+                        {
+                            "Action": [
+                                "sts:AssumeRole"
+                            ],
+                            "Effect": "Allow",
+                            "Principal": {
+                                "Service": [
+                                    "ec2.amazonaws.com"
+                                ]
+                            }
+                        }
+                    ]
+                },
+                "Path": "/",
+                "Policies": [
+                    {
+                        "PolicyDocument": {
+                            "Statement": [
+                                {
+                                    "Action": [
+                                        "ec2:Describe*"
+                                    ],
+                                    "Effect": "Allow",
+                                    "Resource": "*"
+                                }
+                            ]
+                        },
+                        "PolicyName": "default-ec2-read-only-all"
+                    },
+                    {
+                        "PolicyDocument": {
+                            "Statement": [
+                                {
+                                    "Action": [
+                                        "s3:List*",
+                                        "s3:Get*",
+                                        "s3:Describe*"
+                                    ],
+                                    "Effect": "Allow",
+                                    "Resource": [
+                                        {
+                                            "Fn::Join": [
+                                                "",
+                                                [
+                                                    "arn:aws:s3:::",
+                                                    {
+                                                        "Ref": "VpcName"
+                                                    },
+                                                    "-",
+                                                    {
+                                                        "Ref": "SystemOperationsBucketName"
+                                                    }
+                                                ]
+                                            ]
+                                        },
+                                        {
+                                            "Fn::Join": [
+                                                "",
+                                                [
+                                                    "arn:aws:s3:::",
+                                                    {
+                                                        "Ref": "VpcName"
+                                                    },
+                                                    "-",
+                                                    {
+                                                        "Ref": "SystemOperationsBucketName"
+                                                    },
+                                                    "*"
+                                                ]
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        "PolicyName": "default-s3-read-system-operations"
+                    }
+                ]
+            },
+            "Type": "AWS::IAM::Role"
+        },
         "ExternalAcl": {
             "Properties": {
                 "Tags": [
