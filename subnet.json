@@ -59,6 +59,10 @@
             "Description": "",
             "Type": "String"
         },
+        "DefaultProfile": {
+            "Description": "",
+            "Type": "String"
+        },
         "ExternalAcl": {
             "Description": "",
             "Type": "String"
@@ -445,6 +449,7 @@
                                 "owner": "ec2-user"
                             },
                             "/home/ec2-user/.gitconfig": {
+                                "authentication": "S3AccessCreds",
                                 "group": "ec2-user",
                                 "mode": "000644",
                                 "owner": "ec2-user",
@@ -454,10 +459,6 @@
                                             "",
                                             [
                                                 "arn:aws:s3:::",
-                                                {
-                                                    "Ref": "VpcName"
-                                                },
-                                                "-",
                                                 {
                                                     "Ref": "SystemOperationsBucketName"
                                                 },
@@ -473,7 +474,6 @@
                                 "json": []
                             },
                             "yum": {
-                                "ansible": [],
                                 "gcc": [],
                                 "git": [],
                                 "make": [],
@@ -491,12 +491,12 @@
                             }
                         }
                     }
-                },
-                "IamInstanceProfile": {
-                    "Ref": "DefaultProfile"
                 }
             },
             "Properties": {
+                "IamInstanceProfile": {
+                    "Ref": "DefaultProfile"
+                },
                 "ImageId": {
                     "Fn::FindInMap": [
                         "NatRegionMap",
@@ -565,6 +565,19 @@
                                 "exec > /root/install_log 2>&1\n",
                                 "set -x\n",
                                 "yum update -y && yum install -y yum-cron && chkconfig yum-cron on\n",
+                                "yum update -y aws-cfn-bootstrap\n",
+                                "# Install the files and packages from the metadata\n",
+                                "/opt/aws/bin/cfn-init -v ",
+                                "         --stack ",
+                                {
+                                    "Ref": "AWS::StackName"
+                                },
+                                "         --resource NatInstance ",
+                                "         --region ",
+                                {
+                                    "Ref": "AWS::Region"
+                                },
+                                "\n",
                                 "cd /home/ec2-user\n",
                                 "git clone https://github.com/neoseele/aws-ansible.git\n",
                                 "chown -R ec2-user:ec2-user aws-ansible\n"

@@ -15,7 +15,7 @@ A1:
   DatabaseA: &DatabaseA 10.0.3.0/24
   DatabaseB: &DatabaseB 10.0.131.0/24
   ServerAccess: &ServerAccess 115.64.236.212/32
-  SystemOperationsBucketName: &SystemOperationsBucketName system-operations
+  SystemOperationsBucketName: &SystemOperationsBucketName a1-system-operations
 
   stacks:
 
@@ -67,6 +67,10 @@ A1:
           source: Common
           type: resource
           variable: NatSecurityGroup
+        DefaultProfile:
+          source: Common
+          type: resource
+          variable: DefaultProfile
         ExternalCidr:
           value: *ExternalA
         ExternalLoadBalancerCidr:
@@ -114,6 +118,10 @@ A1:
           source: Common
           type: resource
           variable: NatSecurityGroup
+        DefaultProfile:
+          source: Common
+          type: resource
+          variable: DefaultProfile
         ExternalCidr:
           value: *ExternalB
         ExternalLoadBalancerCidr:

@@ -90,10 +90,6 @@
                                                 [
                                                     "arn:aws:s3:::",
                                                     {
-                                                        "Ref": "VpcName"
-                                                    },
-                                                    "-",
-                                                    {
                                                         "Ref": "SystemOperationsBucketName"
                                                     }
                                                 ]
@@ -104,10 +100,6 @@
                                                 "",
                                                 [
                                                     "arn:aws:s3:::",
-                                                    {
-                                                        "Ref": "VpcName"
-                                                    },
-                                                    "-",
                                                     {
                                                         "Ref": "SystemOperationsBucketName"
                                                     },
