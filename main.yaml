@@ -71,6 +71,10 @@ A1:
           source: Common
           type: resource
           variable: DefaultProfile
+        DefaultRole:
+          source: Common
+          type: resource
+          variable: DefaultRole
         ExternalCidr:
           value: *ExternalA
         ExternalLoadBalancerCidr:

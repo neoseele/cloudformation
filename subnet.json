@@ -63,6 +63,10 @@
             "Description": "",
             "Type": "String"
         },
+        "DefaultRole": {
+            "Description": "",
+            "Type": "String"
+        },
         "ExternalAcl": {
             "Description": "",
             "Type": "String"
@@ -421,6 +425,14 @@
         },
         "NatInstance": {
             "Metadata": {
+                "AWS::CloudFormation::Authentication": {
+                    "S3AccessCreds": {
+                        "roleName": {
+                            "Ref": "DefaultRole"
+                        },
+                        "type": "S3"
+                    }
+                },
                 "AWS::CloudFormation::Init": {
                     "config": {
                         "files": {
@@ -453,20 +465,22 @@
                                 "group": "ec2-user",
                                 "mode": "000644",
                                 "owner": "ec2-user",
-                                "source": [
-                                    {
-                                        "Fn::Join": [
-                                            "",
-                                            [
-                                                "arn:aws:s3:::",
-                                                {
-                                                    "Ref": "SystemOperationsBucketName"
-                                                },
-                                                "/gitconfig"
-                                            ]
+                                "source": {
+                                    "Fn::Join": [
+                                        "",
+                                        [
+                                            "https://s3-",
+                                            {
+                                                "Ref": "AWS::Region"
+                                            },
+                                            ".amazonaws.com/",
+                                            {
+                                                "Ref": "SystemOperationsBucketName"
+                                            },
+                                            "/gitconfig"
                                         ]
-                                    }
-                                ]
+                                    ]
+                                }
                             }
                         },
                         "packages": {
@@ -578,6 +592,8 @@
                                     "Ref": "AWS::Region"
                                 },
                                 "\n",
+                                "# Do the rest of the provisioning\n",
+                                "yum update -y ansible\n",
                                 "cd /home/ec2-user\n",
                                 "git clone https://github.com/neoseele/aws-ansible.git\n",
                                 "chown -R ec2-user:ec2-user aws-ansible\n"
