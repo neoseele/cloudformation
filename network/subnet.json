@@ -1,136 +1,136 @@
 {
-    "AWSTemplateFormatVersion": "2010-09-09",
-    "Description": "VPC Subnets",
-    "Mappings": {
-        "Case": {
-            "A": {
-                "Low": "a"
+    "AWSTemplateFormatVersion":"2010-09-09",
+    "Description":"VPC Subnets",
+    "Mappings":{
+        "Case":{
+            "A":{
+                "Low":"a"
             },
-            "B": {
-                "Low": "b"
+            "B":{
+                "Low":"b"
             },
-            "C": {
-                "Low": "c"
+            "C":{
+                "Low":"c"
             },
-            "D": {
-                "Low": "d"
+            "D":{
+                "Low":"d"
             }
         },
-        "NatRegionMap": {
-            "ap-northeast-1": {
-                "AMI": "ami-27d6e626"
+        "NatRegionMap":{
+            "ap-northeast-1":{
+                "AMI":"ami-27d6e626"
             },
-            "ap-southeast-1": {
-                "AMI": "ami-6aa38238"
+            "ap-southeast-1":{
+                "AMI":"ami-6aa38238"
             },
-            "ap-southeast-2": {
-                "AMI": "ami-893f53b3"
+            "ap-southeast-2":{
+                "AMI":"ami-893f53b3"
             },
-            "eu-central-1": {
-                "AMI": "ami-ae380eb3"
+            "eu-central-1":{
+                "AMI":"ami-ae380eb3"
             },
-            "eu-west-1": {
-                "AMI": "ami-14913f63"
+            "eu-west-1":{
+                "AMI":"ami-14913f63"
             },
-            "sa-east-1": {
-                "AMI": "ami-8122969c"
+            "sa-east-1":{
+                "AMI":"ami-8122969c"
             },
-            "us-east-1": {
-                "AMI": "ami-184dc970"
+            "us-east-1":{
+                "AMI":"ami-184dc970"
             },
-            "us-west-1": {
-                "AMI": "ami-a98396ec"
+            "us-west-1":{
+                "AMI":"ami-a98396ec"
             },
-            "us-west-2": {
-                "AMI": "ami-290f4119"
+            "us-west-2":{
+                "AMI":"ami-290f4119"
             }
         }
     },
-    "Parameters": {
-        "ApplicationCidr": {
-            "Description": "",
-            "Type": "String"
+    "Parameters":{
+        "ApplicationCidr":{
+            "Description":"",
+            "Type":"String"
         },
-        "AvailabilityZone": {
-            "Description": "",
-            "Type": "String"
+        "AvailabilityZone":{
+            "Description":"",
+            "Type":"String"
         },
-        "DatabaseCidr": {
-            "Description": "",
-            "Type": "String"
+        "DatabaseCidr":{
+            "Description":"",
+            "Type":"String"
         },
-        "DefaultProfile": {
-            "Description": "",
-            "Type": "String"
+        "DefaultProfile":{
+            "Description":"",
+            "Type":"String"
         },
-        "DefaultRole": {
-            "Description": "",
-            "Type": "String"
+        "DefaultRole":{
+            "Description":"",
+            "Type":"String"
         },
-        "ExternalAcl": {
-            "Description": "",
-            "Type": "String"
+        "ExternalAcl":{
+            "Description":"",
+            "Type":"String"
         },
-        "ExternalCidr": {
-            "Description": "",
-            "Type": "String"
+        "ExternalCidr":{
+            "Description":"",
+            "Type":"String"
         },
-        "ExternalLoadBalancerCidr": {
-            "Description": "",
-            "Type": "String"
+        "ExternalLoadBalancerCidr":{
+            "Description":"",
+            "Type":"String"
         },
-        "ExternalRouteTable": {
-            "Description": "",
-            "Type": "String"
+        "ExternalRouteTable":{
+            "Description":"",
+            "Type":"String"
         },
-        "InternalAcl": {
-            "Description": "",
-            "Type": "String"
+        "InternalAcl":{
+            "Description":"",
+            "Type":"String"
         },
-        "InternalRouteTable": {
-            "Description": "",
-            "Type": "String"
+        "InternalRouteTable":{
+            "Description":"",
+            "Type":"String"
         },
-        "KeyName": {
-            "AllowedPattern": "[-_ a-zA-Z0-9]*",
-            "ConstraintDescription": "can contain only alphanumeric characters, spaces, dashes and underscores.",
-            "Description": "Name of an existing EC2 KeyPair (find or create here: https://console.aws.amazon.com/ec2/v2/home#KeyPairs: )",
-            "MaxLength": "64",
-            "MinLength": "1",
-            "Type": "String"
+        "KeyName":{
+            "AllowedPattern":"[-_ a-zA-Z0-9]*",
+            "ConstraintDescription":"can contain only alphanumeric characters, spaces, dashes and underscores.",
+            "Description":"Name of an existing EC2 KeyPair (find or create here: https://console.aws.amazon.com/ec2/v2/home#KeyPairs: )",
+            "MaxLength":"64",
+            "MinLength":"1",
+            "Type":"String"
         },
-        "NatSecurityGroup": {
-            "Description": "",
-            "Type": "String"
+        "NatSecurityGroup":{
+            "Description":"",
+            "Type":"String"
         },
-        "ServicePhase": {
-            "Description": "",
-            "Type": "String"
+        "ServicePhase":{
+            "Description":"",
+            "Type":"String"
         },
-        "SystemOperationsBucketName": {
-            "Description": "",
-            "Type": "String"
+        "SystemOperationsBucketName":{
+            "Description":"",
+            "Type":"String"
         },
-        "Vpc": {
-            "Description": "",
-            "Type": "String"
+        "Vpc":{
+            "Description":"",
+            "Type":"String"
         }
     },
-    "Resources": {
-        "ApplicationSubnet": {
-            "Properties": {
-                "AvailabilityZone": {
-                    "Fn::Join": [
+    "Resources":{
+        "ApplicationSubnet":{
+            "Properties":{
+                "AvailabilityZone":{
+                    "Fn::Join":[
                         "",
                         [
                             {
-                                "Ref": "AWS::Region"
+                                "Ref":"AWS::Region"
                             },
                             {
-                                "Fn::FindInMap": [
+                                "Fn::FindInMap":[
                                     "Case",
                                     {
-                                        "Ref": "AvailabilityZone"
+                                        "Ref":"AvailabilityZone"
                                     },
                                     "Low"
                                 ]
@@ -138,81 +138,81 @@
                         ]
                     ]
                 },
-                "CidrBlock": {
-                    "Ref": "ApplicationCidr"
+                "CidrBlock":{
+                    "Ref":"ApplicationCidr"
                 },
-                "Tags": [
+                "Tags":[
                     {
-                        "Key": "Name",
-                        "Value": {
-                            "Fn::Join": [
+                        "Key":"Name",
+                        "Value":{
+                            "Fn::Join":[
                                 "",
                                 [
                                     "ApplicationSubnet",
                                     {
-                                        "Ref": "AvailabilityZone"
+                                        "Ref":"AvailabilityZone"
                                     }
                                 ]
                             ]
                         }
                     },
                     {
-                        "Key": "ServiceComponent",
-                        "Value": "Network"
+                        "Key":"ServiceComponent",
+                        "Value":"Network"
                     },
                     {
-                        "Key": "ServiceName",
-                        "Value": "ApplicationSubnet"
+                        "Key":"ServiceName",
+                        "Value":"ApplicationSubnet"
                     },
                     {
-                        "Key": "ServicePhase",
-                        "Value": {
-                            "Ref": "ServicePhase"
+                        "Key":"ServicePhase",
+                        "Value":{
+                            "Ref":"ServicePhase"
                         }
                     }
                 ],
-                "VpcId": {
-                    "Ref": "Vpc"
+                "VpcId":{
+                    "Ref":"Vpc"
                 }
             },
-            "Type": "AWS::EC2::Subnet"
+            "Type":"AWS::EC2::Subnet"
         },
-        "ApplicationSubnetAclAssociation": {
-            "Properties": {
-                "NetworkAclId": {
-                    "Ref": "InternalAcl"
+        "ApplicationSubnetAclAssociation":{
+            "Properties":{
+                "NetworkAclId":{
+                    "Ref":"InternalAcl"
                 },
-                "SubnetId": {
-                    "Ref": "ApplicationSubnet"
+                "SubnetId":{
+                    "Ref":"ApplicationSubnet"
                 }
             },
-            "Type": "AWS::EC2::SubnetNetworkAclAssociation"
+            "Type":"AWS::EC2::SubnetNetworkAclAssociation"
         },
-        "ApplicationSubnetRouteTableAssociation": {
-            "Properties": {
-                "RouteTableId": {
-                    "Ref": "InternalRouteTable"
+        "ApplicationSubnetRouteTableAssociation":{
+            "Properties":{
+                "RouteTableId":{
+                    "Ref":"InternalRouteTable"
                 },
-                "SubnetId": {
-                    "Ref": "ApplicationSubnet"
+                "SubnetId":{
+                    "Ref":"ApplicationSubnet"
                 }
             },
-            "Type": "AWS::EC2::SubnetRouteTableAssociation"
+            "Type":"AWS::EC2::SubnetRouteTableAssociation"
         },
-        "DatabaseSubnet": {
-            "Properties": {
-                "AvailabilityZone": {
-                    "Fn::Join": [
+        "DatabaseSubnet":{
+            "Properties":{
+                "AvailabilityZone":{
+                    "Fn::Join":[
                         "",
                         [
                             {
-                                "Ref": "AWS::Region"
+                                "Ref":"AWS::Region"
                             },
                             {
-                                "Fn::FindInMap": [
+                                "Fn::FindInMap":[
                                     "Case",
                                     {
-                                        "Ref": "AvailabilityZone"
+                                        "Ref":"AvailabilityZone"
                                     },
                                     "Low"
                                 ]
@@ -220,70 +220,70 @@
                         ]
                     ]
                 },
-                "CidrBlock": {
-                    "Ref": "DatabaseCidr"
+                "CidrBlock":{
+                    "Ref":"DatabaseCidr"
                 },
-                "Tags": [
+                "Tags":[
                     {
-                        "Key": "Name",
-                        "Value": {
-                            "Fn::Join": [
+                        "Key":"Name",
+                        "Value":{
+                            "Fn::Join":[
                                 "",
                                 [
                                     "DatabaseSubnet",
                                     {
-                                        "Ref": "AvailabilityZone"
+                                        "Ref":"AvailabilityZone"
                                     }
                                 ]
                             ]
                         }
                     },
                     {
-                        "Key": "ServiceComponent",
-                        "Value": "Network"
+                        "Key":"ServiceComponent",
+                        "Value":"Network"
                     },
                     {
-                        "Key": "ServiceName",
-                        "Value": "DatabaseSubnet"
+                        "Key":"ServiceName",
+                        "Value":"DatabaseSubnet"
                     },
                     {
-                        "Key": "ServicePhase",
-                        "Value": {
-                            "Ref": "ServicePhase"
+                        "Key":"ServicePhase",
+                        "Value":{
+                            "Ref":"ServicePhase"
                         }
                     }
                 ],
-                "VpcId": {
-                    "Ref": "Vpc"
+                "VpcId":{
+                    "Ref":"Vpc"
                 }
             },
-            "Type": "AWS::EC2::Subnet"
+            "Type":"AWS::EC2::Subnet"
         },
-        "DatabaseSubnetRouteTableAssociation": {
-            "Properties": {
-                "RouteTableId": {
-                    "Ref": "InternalRouteTable"
+        "DatabaseSubnetRouteTableAssociation":{
+            "Properties":{
+                "RouteTableId":{
+                    "Ref":"InternalRouteTable"
                 },
-                "SubnetId": {
-                    "Ref": "DatabaseSubnet"
+                "SubnetId":{
+                    "Ref":"DatabaseSubnet"
                 }
             },
-            "Type": "AWS::EC2::SubnetRouteTableAssociation"
+            "Type":"AWS::EC2::SubnetRouteTableAssociation"
         },
-        "ExternalLoadBalancerSubnet": {
-            "Properties": {
-                "AvailabilityZone": {
-                    "Fn::Join": [
+        "ExternalLoadBalancerSubnet":{
+            "Properties":{
+                "AvailabilityZone":{
+                    "Fn::Join":[
                         "",
                         [
                             {
-                                "Ref": "AWS::Region"
+                                "Ref":"AWS::Region"
                             },
                             {
-                                "Fn::FindInMap": [
+                                "Fn::FindInMap":[
                                     "Case",
                                     {
-                                        "Ref": "AvailabilityZone"
+                                        "Ref":"AvailabilityZone"
                                     },
                                     "Low"
                                 ]
@@ -291,70 +291,70 @@
                         ]
                     ]
                 },
-                "CidrBlock": {
-                    "Ref": "ExternalLoadBalancerCidr"
+                "CidrBlock":{
+                    "Ref":"ExternalLoadBalancerCidr"
                 },
-                "Tags": [
+                "Tags":[
                     {
-                        "Key": "Name",
-                        "Value": {
-                            "Fn::Join": [
+                        "Key":"Name",
+                        "Value":{
+                            "Fn::Join":[
                                 "",
                                 [
                                     "ExternalLoadBalancerSubnet",
                                     {
-                                        "Ref": "AvailabilityZone"
+                                        "Ref":"AvailabilityZone"
                                     }
                                 ]
                             ]
                         }
                     },
                     {
-                        "Key": "ServiceComponent",
-                        "Value": "Network"
+                        "Key":"ServiceComponent",
+                        "Value":"Network"
                     },
                     {
-                        "Key": "ServiceName",
-                        "Value": "ExternalLoadBalancerSubnet"
+                        "Key":"ServiceName",
+                        "Value":"ExternalLoadBalancerSubnet"
                     },
                     {
-                        "Key": "ServicePhase",
-                        "Value": {
-                            "Ref": "ServicePhase"
+                        "Key":"ServicePhase",
+                        "Value":{
+                            "Ref":"ServicePhase"
                         }
                     }
                 ],
-                "VpcId": {
-                    "Ref": "Vpc"
+                "VpcId":{
+                    "Ref":"Vpc"
                 }
             },
-            "Type": "AWS::EC2::Subnet"
+            "Type":"AWS::EC2::Subnet"
         },
-        "ExternalLoadBalancerSubnetRouteTableAssociation": {
-            "Properties": {
-                "RouteTableId": {
-                    "Ref": "ExternalRouteTable"
+        "ExternalLoadBalancerSubnetRouteTableAssociation":{
+            "Properties":{
+                "RouteTableId":{
+                    "Ref":"ExternalRouteTable"
                 },
-                "SubnetId": {
-                    "Ref": "ExternalLoadBalancerSubnet"
+                "SubnetId":{
+                    "Ref":"ExternalLoadBalancerSubnet"
                 }
             },
-            "Type": "AWS::EC2::SubnetRouteTableAssociation"
+            "Type":"AWS::EC2::SubnetRouteTableAssociation"
         },
-        "ExternalSubnet": {
-            "Properties": {
-                "AvailabilityZone": {
-                    "Fn::Join": [
+        "ExternalSubnet":{
+            "Properties":{
+                "AvailabilityZone":{
+                    "Fn::Join":[
                         "",
                         [
                             {
-                                "Ref": "AWS::Region"
+                                "Ref":"AWS::Region"
                             },
                             {
-                                "Fn::FindInMap": [
+                                "Fn::FindInMap":[
                                     "Case",
                                     {
-                                        "Ref": "AvailabilityZone"
+                                        "Ref":"AvailabilityZone"
                                     },
                                     "Low"
                                 ]
@@ -362,142 +362,142 @@
                         ]
                     ]
                 },
-                "CidrBlock": {
-                    "Ref": "ExternalCidr"
+                "CidrBlock":{
+                    "Ref":"ExternalCidr"
                 },
-                "Tags": [
+                "Tags":[
                     {
-                        "Key": "Name",
-                        "Value": {
-                            "Fn::Join": [
+                        "Key":"Name",
+                        "Value":{
+                            "Fn::Join":[
                                 "",
                                 [
                                     "ExternalSubnet",
                                     {
-                                        "Ref": "AvailabilityZone"
+                                        "Ref":"AvailabilityZone"
                                     }
                                 ]
                             ]
                         }
                     },
                     {
-                        "Key": "ServiceComponent",
-                        "Value": "Network"
+                        "Key":"ServiceComponent",
+                        "Value":"Network"
                     },
                     {
-                        "Key": "ServiceName",
-                        "Value": "ExternalSubnet"
+                        "Key":"ServiceName",
+                        "Value":"ExternalSubnet"
                     },
                     {
-                        "Key": "ServicePhase",
-                        "Value": {
-                            "Ref": "ServicePhase"
+                        "Key":"ServicePhase",
+                        "Value":{
+                            "Ref":"ServicePhase"
                         }
                     }
                 ],
-                "VpcId": {
-                    "Ref": "Vpc"
+                "VpcId":{
+                    "Ref":"Vpc"
                 }
             },
-            "Type": "AWS::EC2::Subnet"
+            "Type":"AWS::EC2::Subnet"
         },
-        "ExternalSubnetAclAssociation": {
-            "Properties": {
-                "NetworkAclId": {
-                    "Ref": "ExternalAcl"
+        "ExternalSubnetAclAssociation":{
+            "Properties":{
+                "NetworkAclId":{
+                    "Ref":"ExternalAcl"
                 },
-                "SubnetId": {
-                    "Ref": "ExternalSubnet"
+                "SubnetId":{
+                    "Ref":"ExternalSubnet"
                 }
             },
-            "Type": "AWS::EC2::SubnetNetworkAclAssociation"
+            "Type":"AWS::EC2::SubnetNetworkAclAssociation"
         },
-        "ExternalSubnetRouteTableAssociation": {
-            "Properties": {
-                "RouteTableId": {
-                    "Ref": "ExternalRouteTable"
+        "ExternalSubnetRouteTableAssociation":{
+            "Properties":{
+                "RouteTableId":{
+                    "Ref":"ExternalRouteTable"
                 },
-                "SubnetId": {
-                    "Ref": "ExternalSubnet"
+                "SubnetId":{
+                    "Ref":"ExternalSubnet"
                 }
             },
-            "Type": "AWS::EC2::SubnetRouteTableAssociation"
+            "Type":"AWS::EC2::SubnetRouteTableAssociation"
         },
-        "NatInstance": {
-            "Metadata": {
-                "AWS::CloudFormation::Authentication": {
-                    "S3AccessCreds": {
-                        "roleName": {
-                            "Ref": "DefaultRole"
+        "NatInstance":{
+            "Metadata":{
+                "AWS::CloudFormation::Authentication":{
+                    "S3AccessCreds":{
+                        "roleName":{
+                            "Ref":"DefaultRole"
                         },
-                        "type": "S3"
+                        "type":"S3"
                     }
                 },
-                "AWS::CloudFormation::Init": {
-                    "config": {
-                        "files": {
-                            "/etc/yum.repos.d/epel.repo": {
-                                "group": "root",
-                                "mode": "000644",
-                                "owner": "root",
-                                "source": "https://s3.amazonaws.com/cloudformation-examples/enable-epel-on-amazon-linux-ami"
+                "AWS::CloudFormation::Init":{
+                    "config":{
+                        "files":{
+                            "/etc/yum.repos.d/epel.repo":{
+                                "group":"root",
+                                "mode":"000644",
+                                "owner":"root",
+                                "source":"https://s3.amazonaws.com/cloudformation-examples/enable-epel-on-amazon-linux-ami"
                             },
-                            "/home/ec2-user/.boto": {
-                                "content": {
-                                    "Fn::Join": [
+                            "/home/ec2-user/.boto":{
+                                "content":{
+                                    "Fn::Join":[
                                         "",
                                         [
                                             "[Boto]\n",
                                             "aws_region=",
                                             {
-                                                "Ref": "AWS::Region"
+                                                "Ref":"AWS::Region"
                                             },
                                             "\n"
                                         ]
                                     ]
                                 },
-                                "group": "ec2-user",
-                                "mode": "000644",
-                                "owner": "ec2-user"
+                                "group":"ec2-user",
+                                "mode":"000644",
+                                "owner":"ec2-user"
                             },
-                            "/home/ec2-user/.gitconfig": {
-                                "authentication": "S3AccessCreds",
-                                "group": "ec2-user",
-                                "mode": "000644",
-                                "owner": "ec2-user",
-                                "source": {
-                                    "Fn::Join": [
+                            "/home/ec2-user/.gitconfig":{
+                                "authentication":"S3AccessCreds",
+                                "group":"ec2-user",
+                                "mode":"000644",
+                                "owner":"ec2-user",
+                                "source":{
+                                    "Fn::Join":[
                                         "",
                                         [
                                             "https://s3-",
                                             {
-                                                "Ref": "AWS::Region"
+                                                "Ref":"AWS::Region"
                                             },
                                             ".amazonaws.com/",
                                             {
-                                                "Ref": "SystemOperationsBucketName"
+                                                "Ref":"SystemOperationsBucketName"
                                             },
                                             "/gitconfig"
                                         ]
                                     ]
                                 }
                             },
-                            "/home/ec2-user/.vimrc": {
-                                "authentication": "S3AccessCreds",
-                                "group": "ec2-user",
-                                "mode": "000644",
-                                "owner": "ec2-user",
-                                "source": {
-                                    "Fn::Join": [
+                            "/home/ec2-user/.vimrc":{
+                                "authentication":"S3AccessCreds",
+                                "group":"ec2-user",
+                                "mode":"000644",
+                                "owner":"ec2-user",
+                                "source":{
+                                    "Fn::Join":[
                                         "",
                                         [
                                             "https://s3-",
                                             {
-                                                "Ref": "AWS::Region"
+                                                "Ref":"AWS::Region"
                                             },
                                             ".amazonaws.com/",
                                             {
-                                                "Ref": "SystemOperationsBucketName"
+                                                "Ref":"SystemOperationsBucketName"
                                             },
                                             "/vimrc"
                                         ]
@@ -505,97 +505,97 @@
                                 }
                             }
                         },
-                        "packages": {
-                            "rubygems": {
-                                "json": []
+                        "packages":{
+                            "rubygems":{
+                                "json":[]
                             },
-                            "yum": {
-                                "gcc": [],
-                                "git": [],
-                                "make": [],
-                                "puppet": [],
-                                "ruby-devel": [],
-                                "rubygems": [],
-                                "tree": []
+                            "yum":{
+                                "gcc":[],
+                                "git":[],
+                                "make":[],
+                                "puppet":[],
+                                "ruby-devel":[],
+                                "rubygems":[],
+                                "tree":[]
                             }
                         },
-                        "services": {
-                            "sysvinit": {
-                                "puppet": {
-                                    "enabled": "false",
-                                    "ensureRunning": "false"
+                        "services":{
+                            "sysvinit":{
+                                "puppet":{
+                                    "enabled":"false",
+                                    "ensureRunning":"false"
                                 }
                             }
                         }
                     }
                 }
             },
-            "Properties": {
-                "IamInstanceProfile": {
-                    "Ref": "DefaultProfile"
+            "Properties":{
+                "IamInstanceProfile":{
+                    "Ref":"DefaultProfile"
                 },
-                "ImageId": {
-                    "Fn::FindInMap": [
+                "ImageId":{
+                    "Fn::FindInMap":[
                         "NatRegionMap",
                         {
-                            "Ref": "AWS::Region"
+                            "Ref":"AWS::Region"
                         },
                         "AMI"
                     ]
                 },
-                "InstanceType": "t2.micro",
-                "KeyName": {
-                    "Ref": "KeyName"
+                "InstanceType":"t2.micro",
+                "KeyName":{
+                    "Ref":"KeyName"
                 },
-                "NetworkInterfaces": [
+                "NetworkInterfaces":[
                     {
-                        "AssociatePublicIpAddress": "true",
-                        "DeleteOnTermination": "true",
-                        "DeviceIndex": "0",
-                        "GroupSet": [
+                        "AssociatePublicIpAddress":"true",
+                        "DeleteOnTermination":"true",
+                        "DeviceIndex":"0",
+                        "GroupSet":[
                             {
-                                "Ref": "NatSecurityGroup"
+                                "Ref":"NatSecurityGroup"
                             }
                         ],
-                        "SubnetId": {
-                            "Ref": "ExternalSubnet"
+                        "SubnetId":{
+                            "Ref":"ExternalSubnet"
                         }
                     }
                 ],
-                "SourceDestCheck": "false",
-                "Tags": [
+                "SourceDestCheck":"false",
+                "Tags":[
                     {
-                        "Key": "Name",
-                        "Value": {
-                            "Fn::Join": [
+                        "Key":"Name",
+                        "Value":{
+                            "Fn::Join":[
                                 "",
                                 [
                                     "NatInstance",
                                     {
-                                        "Ref": "AvailabilityZone"
+                                        "Ref":"AvailabilityZone"
                                     }
                                 ]
                             ]
                         }
                     },
                     {
-                        "Key": "ServiceComponent",
-                        "Value": "Network"
+                        "Key":"ServiceComponent",
+                        "Value":"Network"
                     },
                     {
-                        "Key": "ServiceName",
-                        "Value": "NatInstance"
+                        "Key":"ServiceName",
+                        "Value":"NatInstance"
                     },
                     {
-                        "Key": "ServicePhase",
-                        "Value": {
-                            "Ref": "ServicePhase"
+                        "Key":"ServicePhase",
+                        "Value":{
+                            "Ref":"ServicePhase"
                         }
                     }
                 ],
-                "UserData": {
-                    "Fn::Base64": {
-                        "Fn::Join": [
+                "UserData":{
+                    "Fn::Base64":{
+                        "Fn::Join":[
                             "",
                             [
                                 "#!/bin/bash\n",
@@ -607,12 +607,12 @@
                                 "/opt/aws/bin/cfn-init -v ",
                                 "         --stack ",
                                 {
-                                    "Ref": "AWS::StackName"
+                                    "Ref":"AWS::StackName"
                                 },
                                 "         --resource NatInstance ",
                                 "         --region ",
                                 {
-                                    "Ref": "AWS::Region"
+                                    "Ref":"AWS::Region"
                                 },
                                 "\n",
                                 "# Do the rest of the provisioning\n",
@@ -626,7 +626,7 @@
                     }
                 }
             },
-            "Type": "AWS::EC2::Instance"
+            "Type":"AWS::EC2::Instance"
         }
     }
 }

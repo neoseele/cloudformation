@@ -1,195 +1,195 @@
 {
-    "AWSTemplateFormatVersion": "2010-09-09",
-    "Description": "VPC App",
-    "Mappings": {
-        "AWSInstanceType2Arch": {
-            "c1.medium": {
-                "Arch": "PV64"
+    "AWSTemplateFormatVersion":"2010-09-09",
+    "Description":"VPC App",
+    "Mappings":{
+        "AWSInstanceType2Arch":{
+            "c1.medium":{
+                "Arch":"PV64"
             },
-            "c1.xlarge": {
-                "Arch": "PV64"
+            "c1.xlarge":{
+                "Arch":"PV64"
             },
-            "c3.2xlarge": {
-                "Arch": "HVM64"
+            "c3.2xlarge":{
+                "Arch":"HVM64"
             },
-            "c3.4xlarge": {
-                "Arch": "HVM64"
+            "c3.4xlarge":{
+                "Arch":"HVM64"
             },
-            "c3.8xlarge": {
-                "Arch": "HVM64"
+            "c3.8xlarge":{
+                "Arch":"HVM64"
             },
-            "c3.large": {
-                "Arch": "HVM64"
+            "c3.large":{
+                "Arch":"HVM64"
             },
-            "c3.xlarge": {
-                "Arch": "HVM64"
+            "c3.xlarge":{
+                "Arch":"HVM64"
             },
-            "c4.2xlarge": {
-                "Arch": "HVM64"
+            "c4.2xlarge":{
+                "Arch":"HVM64"
             },
-            "c4.4xlarge": {
-                "Arch": "HVM64"
+            "c4.4xlarge":{
+                "Arch":"HVM64"
             },
-            "c4.8xlarge": {
-                "Arch": "HVM64"
+            "c4.8xlarge":{
+                "Arch":"HVM64"
             },
-            "c4.large": {
-                "Arch": "HVM64"
+            "c4.large":{
+                "Arch":"HVM64"
             },
-            "c4.xlarge": {
-                "Arch": "HVM64"
+            "c4.xlarge":{
+                "Arch":"HVM64"
             },
-            "cc2.8xlarge": {
-                "Arch": "HVM64"
+            "cc2.8xlarge":{
+                "Arch":"HVM64"
             },
-            "cr1.8xlarge": {
-                "Arch": "HVM64"
+            "cr1.8xlarge":{
+                "Arch":"HVM64"
             },
-            "g2.2xlarge": {
-                "Arch": "HVMG2"
+            "g2.2xlarge":{
+                "Arch":"HVMG2"
             },
-            "hi1.4xlarge": {
-                "Arch": "HVM64"
+            "hi1.4xlarge":{
+                "Arch":"HVM64"
             },
-            "hs1.8xlarge": {
-                "Arch": "HVM64"
+            "hs1.8xlarge":{
+                "Arch":"HVM64"
             },
-            "i2.2xlarge": {
-                "Arch": "HVM64"
+            "i2.2xlarge":{
+                "Arch":"HVM64"
             },
-            "i2.4xlarge": {
-                "Arch": "HVM64"
+            "i2.4xlarge":{
+                "Arch":"HVM64"
             },
-            "i2.8xlarge": {
-                "Arch": "HVM64"
+            "i2.8xlarge":{
+                "Arch":"HVM64"
             },
-            "i2.xlarge": {
-                "Arch": "HVM64"
+            "i2.xlarge":{
+                "Arch":"HVM64"
             },
-            "m1.large": {
-                "Arch": "PV64"
+            "m1.large":{
+                "Arch":"PV64"
             },
-            "m1.medium": {
-                "Arch": "PV64"
+            "m1.medium":{
+                "Arch":"PV64"
             },
-            "m1.small": {
-                "Arch": "PV64"
+            "m1.small":{
+                "Arch":"PV64"
             },
-            "m1.xlarge": {
-                "Arch": "PV64"
+            "m1.xlarge":{
+                "Arch":"PV64"
             },
-            "m2.2xlarge": {
-                "Arch": "PV64"
+            "m2.2xlarge":{
+                "Arch":"PV64"
             },
-            "m2.4xlarge": {
-                "Arch": "PV64"
+            "m2.4xlarge":{
+                "Arch":"PV64"
             },
-            "m2.xlarge": {
-                "Arch": "PV64"
+            "m2.xlarge":{
+                "Arch":"PV64"
             },
-            "m3.2xlarge": {
-                "Arch": "HVM64"
+            "m3.2xlarge":{
+                "Arch":"HVM64"
             },
-            "m3.large": {
-                "Arch": "HVM64"
+            "m3.large":{
+                "Arch":"HVM64"
             },
-            "m3.medium": {
-                "Arch": "HVM64"
+            "m3.medium":{
+                "Arch":"HVM64"
             },
-            "m3.xlarge": {
-                "Arch": "HVM64"
+            "m3.xlarge":{
+                "Arch":"HVM64"
             },
-            "r3.2xlarge": {
-                "Arch": "HVM64"
+            "r3.2xlarge":{
+                "Arch":"HVM64"
             },
-            "r3.4xlarge": {
-                "Arch": "HVM64"
+            "r3.4xlarge":{
+                "Arch":"HVM64"
             },
-            "r3.8xlarge": {
-                "Arch": "HVM64"
+            "r3.8xlarge":{
+                "Arch":"HVM64"
             },
-            "r3.large": {
-                "Arch": "HVM64"
+            "r3.large":{
+                "Arch":"HVM64"
             },
-            "r3.xlarge": {
-                "Arch": "HVM64"
+            "r3.xlarge":{
+                "Arch":"HVM64"
             },
-            "t1.micro": {
-                "Arch": "PV64"
+            "t1.micro":{
+                "Arch":"PV64"
             },
-            "t2.medium": {
-                "Arch": "HVM64"
+            "t2.medium":{
+                "Arch":"HVM64"
             },
-            "t2.micro": {
-                "Arch": "HVM64"
+            "t2.micro":{
+                "Arch":"HVM64"
             },
-            "t2.small": {
-                "Arch": "HVM64"
+            "t2.small":{
+                "Arch":"HVM64"
             }
         },
-        "AWSRegionArch2AMI": {
-            "ap-northeast-1": {
-                "HVM64": "ami-18869819",
-                "HVMG2": "ami-2e90892f",
-                "PV64": "ami-3c87993d"
+        "AWSRegionArch2AMI":{
+            "ap-northeast-1":{
+                "HVM64":"ami-18869819",
+                "HVMG2":"ami-2e90892f",
+                "PV64":"ami-3c87993d"
             },
-            "ap-southeast-1": {
-                "HVM64": "ami-96bb90c4",
-                "HVMG2": "ami-3e78526c",
-                "PV64": "ami-58ba910a"
+            "ap-southeast-1":{
+                "HVM64":"ami-96bb90c4",
+                "HVMG2":"ami-3e78526c",
+                "PV64":"ami-58ba910a"
             },
-            "ap-southeast-2": {
-                "HVM64": "ami-d50773ef",
-                "HVMG2": "ami-315e2a0b",
-                "PV64": "ami-1500742f"
+            "ap-southeast-2":{
+                "HVM64":"ami-d50773ef",
+                "HVMG2":"ami-315e2a0b",
+                "PV64":"ami-1500742f"
             },
-            "cn-north-1": {
-                "HVM64": "ami-981d8fa1",
-                "HVMG2": "NOT_SUPPORTED",
-                "PV64": "ami-8a1d8fb3"
+            "cn-north-1":{
+                "HVM64":"ami-981d8fa1",
+                "HVMG2":"NOT_SUPPORTED",
+                "PV64":"ami-8a1d8fb3"
             },
-            "eu-central-1": {
-                "HVM64": "ami-04003319",
-                "HVMG2": "NOT_SUPPORTED",
-                "PV64": "ami-0600331b"
+            "eu-central-1":{
+                "HVM64":"ami-04003319",
+                "HVMG2":"NOT_SUPPORTED",
+                "PV64":"ami-0600331b"
             },
-            "eu-west-1": {
-                "HVM64": "ami-9d23aeea",
-                "HVMG2": "ami-4d7cf03a",
-                "PV64": "ami-7b3db00c"
+            "eu-west-1":{
+                "HVM64":"ami-9d23aeea",
+                "HVMG2":"ami-4d7cf03a",
+                "PV64":"ami-7b3db00c"
             },
-            "sa-east-1": {
-                "HVM64": "ami-af9925b2",
-                "HVMG2": "NOT_SUPPORTED",
-                "PV64": "ami-fd9925e0"
+            "sa-east-1":{
+                "HVM64":"ami-af9925b2",
+                "HVMG2":"NOT_SUPPORTED",
+                "PV64":"ami-fd9925e0"
             },
-            "us-east-1": {
-                "HVM64": "ami-146e2a7c",
-                "HVMG2": "ami-7200461a",
-                "PV64": "ami-8e682ce6"
+            "us-east-1":{
+                "HVM64":"ami-146e2a7c",
+                "HVMG2":"ami-7200461a",
+                "PV64":"ami-8e682ce6"
             },
-            "us-west-1": {
-                "HVM64": "ami-42908907",
-                "HVMG2": "ami-244b5361",
-                "PV64": "ami-f49089b1"
+            "us-west-1":{
+                "HVM64":"ami-42908907",
+                "HVMG2":"ami-244b5361",
+                "PV64":"ami-f49089b1"
             },
-            "us-west-2": {
-                "HVM64": "ami-dfc39aef",
-                "HVMG2": "ami-0b78203b",
-                "PV64": "ami-9fc29baf"
+            "us-west-2":{
+                "HVM64":"ami-dfc39aef",
+                "HVMG2":"ami-0b78203b",
+                "PV64":"ami-9fc29baf"
             }
         }
     },
-    "Outputs": {
-        "WebsiteURL": {
-            "Description": "URL for newly created LAMP stack",
-            "Value": {
-                "Fn::Join": [
+    "Outputs":{
+        "WebsiteURL":{
+            "Description":"URL for newly created LAMP stack",
+            "Value":{
+                "Fn::Join":[
                     "",
                     [
                         "http://",
                         {
-                            "Fn::GetAtt": [
+                            "Fn::GetAtt":[
                                 "ElasticLoadBalancer",
                                 "DNSName"
                             ]
@@ -199,21 +199,21 @@
             }
         }
     },
-    "Parameters": {
-        "ApplicationSubnets": {
-            "Description": "Application subnets",
-            "Type": "CommaDelimitedList"
+    "Parameters":{
+        "ApplicationSubnets":{
+            "Description":"Application subnets",
+            "Type":"CommaDelimitedList"
         },
-        "DBAllocatedStorage": {
-            "ConstraintDescription": "must be between 5 and 1024Gb.",
-            "Default": "5",
-            "Description": "The size of the database (Gb)",
-            "MaxValue": "1024",
-            "MinValue": "5",
-            "Type": "Number"
+        "DBAllocatedStorage":{
+            "ConstraintDescription":"must be between 5 and 1024Gb.",
+            "Default":"5",
+            "Description":"The size of the database (Gb)",
+            "MaxValue":"1024",
+            "MinValue":"5",
+            "Type":"Number"
         },
-        "DBInstanceClass": {
-            "AllowedValues": [
+        "DBInstanceClass":{
+            "AllowedValues":[
                 "db.t1.micro",
                 "db.m1.small",
                 "db.m1.medium",
@@ -236,44 +236,44 @@
                 "db.m2.4xlarge",
                 "db.cr1.8xlarge"
             ],
-            "ConstraintDescription": "must select a valid database instance type.",
-            "Default": "db.t1.micro",
-            "Description": "The database instance type",
-            "Type": "String"
+            "ConstraintDescription":"must select a valid database instance type.",
+            "Default":"db.t1.micro",
+            "Description":"The database instance type",
+            "Type":"String"
         },
-        "DBName": {
-            "AllowedPattern": "[a-zA-Z][a-zA-Z0-9]*",
-            "ConstraintDescription": "must begin with a letter and contain only alphanumeric characters.",
-            "Default": "myDatabase",
-            "Description": "MySQL database name",
-            "MaxLength": "64",
-            "MinLength": "1",
-            "Type": "String"
+        "DBName":{
+            "AllowedPattern":"[a-zA-Z][a-zA-Z0-9]*",
+            "ConstraintDescription":"must begin with a letter and contain only alphanumeric characters.",
+            "Default":"myDatabase",
+            "Description":"MySQL database name",
+            "MaxLength":"64",
+            "MinLength":"1",
+            "Type":"String"
         },
-        "DBPassword": {
-            "AllowedPattern": "[a-zA-Z0-9]*",
-            "ConstraintDescription": "must contain only alphanumeric characters.",
-            "Description": "Password for MySQL database access",
-            "MaxLength": "41",
-            "MinLength": "8",
-            "NoEcho": "true",
-            "Type": "String"
+        "DBPassword":{
+            "AllowedPattern":"[a-zA-Z0-9]*",
+            "ConstraintDescription":"must contain only alphanumeric characters.",
+            "Description":"Password for MySQL database access",
+            "MaxLength":"41",
+            "MinLength":"8",
+            "NoEcho":"true",
+            "Type":"String"
         },
-        "DBUser": {
-            "AllowedPattern": "[a-zA-Z][a-zA-Z0-9]*",
-            "ConstraintDescription": "must begin with a letter and contain only alphanumeric characters.",
-            "Description": "Username for MySQL database access",
-            "MaxLength": "16",
-            "MinLength": "1",
-            "NoEcho": "true",
-            "Type": "String"
+        "DBUser":{
+            "AllowedPattern":"[a-zA-Z][a-zA-Z0-9]*",
+            "ConstraintDescription":"must begin with a letter and contain only alphanumeric characters.",
+            "Description":"Username for MySQL database access",
+            "MaxLength":"16",
+            "MinLength":"1",
+            "NoEcho":"true",
+            "Type":"String"
         },
-        "DatabaseSubnets": {
-            "Description": "RDS subnets",
-            "Type": "CommaDelimitedList"
+        "DatabaseSubnets":{
+            "Description":"RDS subnets",
+            "Type":"CommaDelimitedList"
         },
-        "InstanceType": {
-            "AllowedValues": [
+        "InstanceType":{
+            "AllowedValues":[
                 "t1.micro",
                 "t2.micro",
                 "t2.small",
@@ -317,144 +317,144 @@
                 "cc2.8xlarge",
                 "cg1.4xlarge"
             ],
-            "ConstraintDescription": "must be a valid EC2 instance type.",
-            "Default": "t2.micro",
-            "Description": "WebServer EC2 instance type",
-            "Type": "String"
+            "ConstraintDescription":"must be a valid EC2 instance type.",
+            "Default":"t2.micro",
+            "Description":"WebServer EC2 instance type",
+            "Type":"String"
         },
-        "KeyName": {
-            "ConstraintDescription": "must be the name of an existing EC2 KeyPair.",
-            "Description": "Name of an existing EC2 KeyPair to enable SSH access to the instances",
-            "Type": "AWS::EC2::KeyPair::KeyName"
+        "KeyName":{
+            "ConstraintDescription":"must be the name of an existing EC2 KeyPair.",
+            "Description":"Name of an existing EC2 KeyPair to enable SSH access to the instances",
+            "Type":"AWS::EC2::KeyPair::KeyName"
         },
-        "LoadBalancerSubnets": {
-            "Description": "Load Balancer subnets",
-            "Type": "CommaDelimitedList"
+        "LoadBalancerSubnets":{
+            "Description":"Load Balancer subnets",
+            "Type":"CommaDelimitedList"
         },
-        "MultiAZDatabase": {
-            "AllowedValues": [
+        "MultiAZDatabase":{
+            "AllowedValues":[
                 "true",
                 "false"
             ],
-            "ConstraintDescription": "must be either true or false.",
-            "Default": "false",
-            "Description": "Create a Multi-AZ MySQL Amazon RDS database instance",
-            "Type": "String"
+            "ConstraintDescription":"must be either true or false.",
+            "Default":"false",
+            "Description":"Create a Multi-AZ MySQL Amazon RDS database instance",
+            "Type":"String"
         },
-        "NatSecurityGroup": {
-            "Description": "",
-            "Type": "String"
+        "NatSecurityGroup":{
+            "Description":"",
+            "Type":"String"
         },
-        "Vpc": {
-            "Description": "",
-            "Type": "String"
+        "Vpc":{
+            "Description":"",
+            "Type":"String"
         },
-        "WebServerCapacity": {
-            "ConstraintDescription": "must be between 1 and 5 EC2 instances.",
-            "Default": "2",
-            "Description": "The initial nuber of WebServer instances",
-            "MaxValue": "5",
-            "MinValue": "1",
-            "Type": "Number"
+        "WebServerCapacity":{
+            "ConstraintDescription":"must be between 1 and 5 EC2 instances.",
+            "Default":"2",
+            "Description":"The initial nuber of WebServer instances",
+            "MaxValue":"5",
+            "MinValue":"1",
+            "Type":"Number"
         }
     },
-    "Resources": {
-        "DBEC2SecurityGroup": {
-            "Properties": {
-                "GroupDescription": "Open database for access",
-                "SecurityGroupIngress": [
+    "Resources":{
+        "DBEC2SecurityGroup":{
+            "Properties":{
+                "GroupDescription":"Open database for access",
+                "SecurityGroupIngress":[
                     {
-                        "FromPort": "3306",
-                        "IpProtocol": "tcp",
-                        "SourceSecurityGroupId": {
-                            "Ref": "WebServerSecurityGroup"
+                        "FromPort":"3306",
+                        "IpProtocol":"tcp",
+                        "SourceSecurityGroupId":{
+                            "Ref":"WebServerSecurityGroup"
                         },
-                        "ToPort": "3306"
+                        "ToPort":"3306"
                     }
                 ],
-                "VpcId": {
-                    "Ref": "Vpc"
+                "VpcId":{
+                    "Ref":"Vpc"
                 }
             },
-            "Type": "AWS::EC2::SecurityGroup"
+            "Type":"AWS::EC2::SecurityGroup"
         },
-        "DBSubnetGroup": {
-            "Properties": {
-                "DBSubnetGroupDescription": "description",
-                "SubnetIds": {
-                    "Ref": "DatabaseSubnets"
+        "DBSubnetGroup":{
+            "Properties":{
+                "DBSubnetGroupDescription":"description",
+                "SubnetIds":{
+                    "Ref":"DatabaseSubnets"
                 }
             },
-            "Type": "AWS::RDS::DBSubnetGroup"
+            "Type":"AWS::RDS::DBSubnetGroup"
         },
-        "ElasticLoadBalancer": {
-            "Properties": {
-                "CrossZone": "true",
-                "HealthCheck": {
-                    "HealthyThreshold": "2",
-                    "Interval": "10",
-                    "Target": "HTTP:80/",
-                    "Timeout": "5",
-                    "UnhealthyThreshold": "5"
+        "ElasticLoadBalancer":{
+            "Properties":{
+                "CrossZone":"true",
+                "HealthCheck":{
+                    "HealthyThreshold":"2",
+                    "Interval":"10",
+                    "Target":"HTTP:80/",
+                    "Timeout":"5",
+                    "UnhealthyThreshold":"5"
                 },
-                "LBCookieStickinessPolicy": [
+                "LBCookieStickinessPolicy":[
                     {
-                        "CookieExpirationPeriod": "30",
-                        "PolicyName": "CookieBasedPolicy"
+                        "CookieExpirationPeriod":"30",
+                        "PolicyName":"CookieBasedPolicy"
                     }
                 ],
-                "Listeners": [
+                "Listeners":[
                     {
-                        "InstancePort": "80",
-                        "LoadBalancerPort": "80",
-                        "PolicyNames": [
+                        "InstancePort":"80",
+                        "LoadBalancerPort":"80",
+                        "PolicyNames":[
                             "CookieBasedPolicy"
                         ],
-                        "Protocol": "HTTP"
+                        "Protocol":"HTTP"
                     }
                 ],
-                "SecurityGroups": [
+                "SecurityGroups":[
                     {
-                        "Ref": "LoadBalancerSecurityGroup"
+                        "Ref":"LoadBalancerSecurityGroup"
                     }
                 ],
-                "Subnets": {
-                    "Ref": "LoadBalancerSubnets"
+                "Subnets":{
+                    "Ref":"LoadBalancerSubnets"
                 }
             },
-            "Type": "AWS::ElasticLoadBalancing::LoadBalancer"
+            "Type":"AWS::ElasticLoadBalancing::LoadBalancer"
         },
-        "LaunchConfig": {
-            "Metadata": {
-                "AWS::CloudFormation::Init": {
-                    "config": {
-                        "files": {
-                            "/etc/cfn/cfn-hup.conf": {
-                                "content": {
-                                    "Fn::Join": [
+        "LaunchConfig":{
+            "Metadata":{
+                "AWS::CloudFormation::Init":{
+                    "config":{
+                        "files":{
+                            "/etc/cfn/cfn-hup.conf":{
+                                "content":{
+                                    "Fn::Join":[
                                         "",
                                         [
                                             "[main]\n",
                                             "stack=",
                                             {
-                                                "Ref": "AWS::StackId"
+                                                "Ref":"AWS::StackId"
                                             },
                                             "\n",
                                             "region=",
                                             {
-                                                "Ref": "AWS::Region"
+                                                "Ref":"AWS::Region"
                                             },
                                             "\n"
                                         ]
                                     ]
                                 },
-                                "group": "root",
-                                "mode": "000400",
-                                "owner": "root"
+                                "group":"root",
+                                "mode":"000400",
+                                "owner":"root"
                             },
-                            "/etc/cfn/hooks.d/cfn-auto-reloader.conf": {
-                                "content": {
-                                    "Fn::Join": [
+                            "/etc/cfn/hooks.d/cfn-auto-reloader.conf":{
+                                "content":{
+                                    "Fn::Join":[
                                         "",
                                         [
                                             "[cfn-auto-reloader-hook]\n",
@@ -463,12 +463,12 @@
                                             "action=/opt/aws/bin/cfn-init -v ",
                                             "         --stack ",
                                             {
-                                                "Ref": "AWS::StackName"
+                                                "Ref":"AWS::StackName"
                                             },
                                             "         --resource LaunchConfig ",
                                             "         --region ",
                                             {
-                                                "Ref": "AWS::Region"
+                                                "Ref":"AWS::Region"
                                             },
                                             "\n",
                                             "runas=root\n"
@@ -476,9 +476,15 @@
                                     ]
                                 }
                             },
-                            "/var/www/html/index.php": {
-                                "content": {
-                                    "Fn::Join": [
+                            "/etc/yum.repos.d/epel.repo":{
+                                "group":"root",
+                                "mode":"000644",
+                                "owner":"root",
+                                "source":"https://s3.amazonaws.com/cloudformation-examples/enable-epel-on-amazon-linux-ami"
+                            },
+                            "/var/www/html/index.php":{
+                                "content":{
+                                    "Fn::Join":[
                                         "",
                                         [
                                             "<html>\n",
@@ -524,7 +530,7 @@
                                             "      }\n",
                                             "      $Database   = \"",
                                             {
-                                                "Fn::GetAtt": [
+                                                "Fn::GetAtt":[
                                                     "MySQLDatabase",
                                                     "Endpoint.Address"
                                                 ]
@@ -532,12 +538,12 @@
                                             "\";\n",
                                             "      $DBUser     = \"",
                                             {
-                                                "Ref": "DBUser"
+                                                "Ref":"DBUser"
                                             },
                                             "\";\n",
                                             "      $DBPassword = \"",
                                             {
-                                                "Ref": "DBPassword"
+                                                "Ref":"DBPassword"
                                             },
                                             "\";\n",
                                             "      print \"Database = \" . $Database . \"<br />\";\n",
@@ -556,74 +562,74 @@
                                         ]
                                     ]
                                 },
-                                "group": "apache",
-                                "mode": "000600",
-                                "owner": "apache"
+                                "group":"apache",
+                                "mode":"000600",
+                                "owner":"apache"
                             }
                         },
-                        "packages": {
-                            "yum": {
-                                "httpd": [],
-                                "php": [],
-                                "php-mysql": []
+                        "packages":{
+                            "yum":{
+                                "httpd":[],
+                                "php":[],
+                                "php-mysql":[]
                             }
                         },
-                        "services": {
-                            "sysvinit": {
-                                "cfn-hup": {
-                                    "enabled": "true",
-                                    "ensureRunning": "true",
-                                    "files": [
+                        "services":{
+                            "sysvinit":{
+                                "cfn-hup":{
+                                    "enabled":"true",
+                                    "ensureRunning":"true",
+                                    "files":[
                                         "/etc/cfn/cfn-hup.conf",
                                         "/etc/cfn/hooks.d/cfn-auto-reloader.conf"
                                     ]
                                 },
-                                "httpd": {
-                                    "enabled": "true",
-                                    "ensureRunning": "true"
+                                "httpd":{
+                                    "enabled":"true",
+                                    "ensureRunning":"true"
                                 }
                             }
                         }
                     }
                 },
-                "Comment1": "Configure the bootstrap helpers to install the Apache Web Server and PHP",
-                "Comment2": "The website content is downloaded from the CloudFormationPHPSample.zip file"
+                "Comment1":"Configure the bootstrap helpers to install the Apache Web Server and PHP",
+                "Comment2":"The website content is downloaded from the CloudFormationPHPSample.zip file"
             },
-            "Properties": {
-                "ImageId": {
-                    "Fn::FindInMap": [
+            "Properties":{
+                "ImageId":{
+                    "Fn::FindInMap":[
                         "AWSRegionArch2AMI",
                         {
-                            "Ref": "AWS::Region"
+                            "Ref":"AWS::Region"
                         },
                         {
-                            "Fn::FindInMap": [
+                            "Fn::FindInMap":[
                                 "AWSInstanceType2Arch",
                                 {
-                                    "Ref": "InstanceType"
+                                    "Ref":"InstanceType"
                                 },
                                 "Arch"
                             ]
                         }
                     ]
                 },
-                "InstanceType": {
-                    "Ref": "InstanceType"
+                "InstanceType":{
+                    "Ref":"InstanceType"
                 },
-                "KeyName": {
-                    "Ref": "KeyName"
+                "KeyName":{
+                    "Ref":"KeyName"
                 },
-                "SecurityGroups": [
+                "SecurityGroups":[
                     {
-                        "Ref": "WebServerSecurityGroup"
+                        "Ref":"WebServerSecurityGroup"
                     },
                     {
-                        "Ref": "NatSecurityGroup"
+                        "Ref":"NatSecurityGroup"
                     }
                 ],
-                "UserData": {
-                    "Fn::Base64": {
-                        "Fn::Join": [
+                "UserData":{
+                    "Fn::Base64":{
+                        "Fn::Join":[
                             "",
                             [
                                 "#!/bin/bash -xe\n",
@@ -632,24 +638,24 @@
                                 "/opt/aws/bin/cfn-init -v ",
                                 "         --stack ",
                                 {
-                                    "Ref": "AWS::StackName"
+                                    "Ref":"AWS::StackName"
                                 },
                                 "         --resource LaunchConfig ",
                                 "         --region ",
                                 {
-                                    "Ref": "AWS::Region"
+                                    "Ref":"AWS::Region"
                                 },
                                 "\n",
                                 "# Signal the status from cfn-init\n",
                                 "/opt/aws/bin/cfn-signal -e $? ",
                                 "         --stack ",
                                 {
-                                    "Ref": "AWS::StackName"
+                                    "Ref":"AWS::StackName"
                                 },
                                 "         --resource WebServerGroup ",
                                 "         --region ",
                                 {
-                                    "Ref": "AWS::Region"
+                                    "Ref":"AWS::Region"
                                 },
                                 "\n"
                             ]
@@ -657,123 +663,123 @@
                     }
                 }
             },
-            "Type": "AWS::AutoScaling::LaunchConfiguration"
+            "Type":"AWS::AutoScaling::LaunchConfiguration"
         },
-        "LoadBalancerSecurityGroup": {
-            "Properties": {
-                "GroupDescription": "Load Balancer Access",
-                "SecurityGroupIngress": [
+        "LoadBalancerSecurityGroup":{
+            "Properties":{
+                "GroupDescription":"Load Balancer Access",
+                "SecurityGroupIngress":[
                     {
-                        "CidrIp": "0.0.0.0/0",
-                        "FromPort": "80",
-                        "IpProtocol": "tcp",
-                        "ToPort": "80"
+                        "CidrIp":"0.0.0.0/0",
+                        "FromPort":"80",
+                        "IpProtocol":"tcp",
+                        "ToPort":"80"
                     },
                     {
-                        "CidrIp": "0.0.0.0/0",
-                        "FromPort": "443",
-                        "IpProtocol": "tcp",
-                        "ToPort": "443"
+                        "CidrIp":"0.0.0.0/0",
+                        "FromPort":"443",
+                        "IpProtocol":"tcp",
+                        "ToPort":"443"
                     }
                 ],
-                "VpcId": {
-                    "Ref": "Vpc"
+                "VpcId":{
+                    "Ref":"Vpc"
                 }
             },
-            "Type": "AWS::EC2::SecurityGroup"
+            "Type":"AWS::EC2::SecurityGroup"
         },
-        "MySQLDatabase": {
-            "Properties": {
-                "AllocatedStorage": {
-                    "Ref": "DBAllocatedStorage"
+        "MySQLDatabase":{
+            "Properties":{
+                "AllocatedStorage":{
+                    "Ref":"DBAllocatedStorage"
                 },
-                "DBInstanceClass": {
-                    "Ref": "DBInstanceClass"
+                "DBInstanceClass":{
+                    "Ref":"DBInstanceClass"
                 },
-                "DBName": {
-                    "Ref": "DBName"
+                "DBName":{
+                    "Ref":"DBName"
                 },
-                "DBSubnetGroupName": {
-                    "Ref": "DBSubnetGroup"
+                "DBSubnetGroupName":{
+                    "Ref":"DBSubnetGroup"
                 },
-                "Engine": "MySQL",
-                "MasterUserPassword": {
-                    "Ref": "DBPassword"
+                "Engine":"MySQL",
+                "MasterUserPassword":{
+                    "Ref":"DBPassword"
                 },
-                "MasterUsername": {
-                    "Ref": "DBUser"
+                "MasterUsername":{
+                    "Ref":"DBUser"
                 },
-                "MultiAZ": {
-                    "Ref": "MultiAZDatabase"
+                "MultiAZ":{
+                    "Ref":"MultiAZDatabase"
                 },
-                "VPCSecurityGroups": [
+                "VPCSecurityGroups":[
                     {
-                        "Ref": "DBEC2SecurityGroup"
+                        "Ref":"DBEC2SecurityGroup"
                     }
                 ]
             },
-            "Type": "AWS::RDS::DBInstance"
+            "Type":"AWS::RDS::DBInstance"
         },
-        "WebServerGroup": {
-            "CreationPolicy": {
-                "ResourceSignal": {
-                    "Count": {
-                        "Ref": "WebServerCapacity"
+        "WebServerGroup":{
+            "CreationPolicy":{
+                "ResourceSignal":{
+                    "Count":{
+                        "Ref":"WebServerCapacity"
                     },
-                    "Timeout": "PT15M"
+                    "Timeout":"PT15M"
                 }
             },
-            "Properties": {
-                "AvailabilityZones": {
-                    "Fn::GetAZs": {
-                        "Ref": "AWS::Region"
+            "Properties":{
+                "AvailabilityZones":{
+                    "Fn::GetAZs":{
+                        "Ref":"AWS::Region"
                     }
                 },
-                "DesiredCapacity": {
-                    "Ref": "WebServerCapacity"
+                "DesiredCapacity":{
+                    "Ref":"WebServerCapacity"
                 },
-                "LaunchConfigurationName": {
-                    "Ref": "LaunchConfig"
+                "LaunchConfigurationName":{
+                    "Ref":"LaunchConfig"
                 },
-                "LoadBalancerNames": [
+                "LoadBalancerNames":[
                     {
-                        "Ref": "ElasticLoadBalancer"
+                        "Ref":"ElasticLoadBalancer"
                     }
                 ],
-                "MaxSize": "5",
-                "MinSize": "1",
-                "VPCZoneIdentifier": {
-                    "Ref": "ApplicationSubnets"
+                "MaxSize":"5",
+                "MinSize":"1",
+                "VPCZoneIdentifier":{
+                    "Ref":"ApplicationSubnets"
                 }
             },
-            "Type": "AWS::AutoScaling::AutoScalingGroup",
-            "UpdatePolicy": {
-                "AutoScalingRollingUpdate": {
-                    "MaxBatchSize": "1",
-                    "MinInstancesInService": "1",
-                    "PauseTime": "PT15M",
-                    "WaitOnResourceSignals": "true"
+            "Type":"AWS::AutoScaling::AutoScalingGroup",
+            "UpdatePolicy":{
+                "AutoScalingRollingUpdate":{
+                    "MaxBatchSize":"1",
+                    "MinInstancesInService":"1",
+                    "PauseTime":"PT15M",
+                    "WaitOnResourceSignals":"true"
                 }
             }
         },
-        "WebServerSecurityGroup": {
-            "Properties": {
-                "GroupDescription": "Enable HTTP access via port 80 locked down to the ELB and SSH access",
-                "SecurityGroupIngress": [
+        "WebServerSecurityGroup":{
+            "Properties":{
+                "GroupDescription":"Enable HTTP access via port 80 locked down to the ELB and SSH access",
+                "SecurityGroupIngress":[
                     {
-                        "FromPort": "80",
-                        "IpProtocol": "tcp",
-                        "SourceSecurityGroupId": {
-                            "Ref": "LoadBalancerSecurityGroup"
+                        "FromPort":"80",
+                        "IpProtocol":"tcp",
+                        "SourceSecurityGroupId":{
+                            "Ref":"LoadBalancerSecurityGroup"
                         },
-                        "ToPort": "80"
+                        "ToPort":"80"
                     }
                 ],
-                "VpcId": {
-                    "Ref": "Vpc"
+                "VpcId":{
+                    "Ref":"Vpc"
                 }
             },
-            "Type": "AWS::EC2::SecurityGroup"
+            "Type":"AWS::EC2::SecurityGroup"
         }
     }
 }
