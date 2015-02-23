@@ -1,0 +1,19 @@
+{
+    "Properties":{
+        "GroupDescription":"Enable HTTP access via port 80 locked down to the ELB and SSH access",
+        "SecurityGroupIngress":[
+            {
+                "FromPort":"80",
+                "IpProtocol":"tcp",
+                "SourceSecurityGroupId":{
+                    "Ref":"LoadBalancerSecurityGroup"
+                },
+                "ToPort":"80"
+            }
+        ],
+        "VpcId":{
+            "Ref":"Vpc"
+        }
+    },
+    "Type":"AWS::EC2::SecurityGroup"
+}

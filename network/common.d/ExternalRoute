@@ -1,0 +1,12 @@
+{
+    "Properties":{
+        "DestinationCidrBlock":"0.0.0.0/0",
+        "GatewayId":{
+            "Ref":"InternetGateway"
+        },
+        "RouteTableId":{
+            "Ref":"ExternalRouteTable"
+        }
+    },
+    "Type":"AWS::EC2::Route"
+}

@@ -1,0 +1,17 @@
+{
+    "DependsOn":[
+        "NatSecurityGroup"
+    ],
+    "Properties":{
+        "FromPort":"-1",
+        "GroupId":{
+            "Ref":"NatSecurityGroup"
+        },
+        "IpProtocol":"icmp",
+        "SourceSecurityGroupId":{
+            "Ref":"NatSecurityGroup"
+        },
+        "ToPort":"-1"
+    },
+    "Type":"AWS::EC2::SecurityGroupIngress"
+}

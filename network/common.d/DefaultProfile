@@ -1,0 +1,11 @@
+{
+    "Properties":{
+        "Path":"/",
+        "Roles":[
+            {
+                "Ref":"DefaultRole"
+            }
+        ]
+    },
+    "Type":"AWS::IAM::InstanceProfile"
+}

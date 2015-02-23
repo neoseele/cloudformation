@@ -1,0 +1,19 @@
+{
+    "Properties":{
+        "GroupDescription":"Open database for access",
+        "SecurityGroupIngress":[
+            {
+                "FromPort":"3306",
+                "IpProtocol":"tcp",
+                "SourceSecurityGroupId":{
+                    "Ref":"WebServerSecurityGroup"
+                },
+                "ToPort":"3306"
+            }
+        ],
+        "VpcId":{
+            "Ref":"Vpc"
+        }
+    },
+    "Type":"AWS::EC2::SecurityGroup"
+}

@@ -1,0 +1,11 @@
+{
+    "Properties":{
+        "InternetGatewayId":{
+            "Ref":"InternetGateway"
+        },
+        "VpcId":{
+            "Ref":"Vpc"
+        }
+    },
+    "Type":"AWS::EC2::VPCGatewayAttachment"
+}

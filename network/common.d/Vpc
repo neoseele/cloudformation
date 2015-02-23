@@ -1,0 +1,30 @@
+{
+    "Properties":{
+        "CidrBlock":{
+            "Ref":"Cidr"
+        },
+        "Tags":[
+            {
+                "Key":"Name",
+                "Value":{
+                    "Ref":"VpcName"
+                }
+            },
+            {
+                "Key":"ServiceComponent",
+                "Value":"Network"
+            },
+            {
+                "Key":"ServiceName",
+                "Value":"Vpc"
+            },
+            {
+                "Key":"ServicePhase",
+                "Value":{
+                    "Ref":"ServicePhase"
+                }
+            }
+        ]
+    },
+    "Type":"AWS::EC2::VPC"
+}

@@ -1,0 +1,12 @@
+{
+    "Properties":{
+        "DestinationCidrBlock":"0.0.0.0/0",
+        "InstanceId":{
+            "Ref":"NatInstance"
+        },
+        "RouteTableId":{
+            "Ref":"InternalRouteTable"
+        }
+    },
+    "Type":"AWS::EC2::Route"
+}

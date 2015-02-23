@@ -1,0 +1,17 @@
+{
+    "DependsOn":[
+        "NatSecurityGroup"
+    ],
+    "Properties":{
+        "FromPort":"3389",
+        "GroupId":{
+            "Ref":"NatSecurityGroup"
+        },
+        "IpProtocol":"tcp",
+        "SourceSecurityGroupId":{
+            "Ref":"NatSecurityGroup"
+        },
+        "ToPort":"3389"
+    },
+    "Type":"AWS::EC2::SecurityGroupIngress"
+}

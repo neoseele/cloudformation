@@ -1,0 +1,11 @@
+{
+    "Properties":{
+        "RouteTableId":{
+            "Ref":"InternalRouteTable"
+        },
+        "SubnetId":{
+            "Ref":"ApplicationSubnet"
+        }
+    },
+    "Type":"AWS::EC2::SubnetRouteTableAssociation"
+}

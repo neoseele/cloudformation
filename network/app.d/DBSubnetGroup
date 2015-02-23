@@ -1,0 +1,9 @@
+{
+    "Properties":{
+        "DBSubnetGroupDescription":"description",
+        "SubnetIds":{
+            "Ref":"DatabaseSubnets"
+        }
+    },
+    "Type":"AWS::RDS::DBSubnetGroup"
+}

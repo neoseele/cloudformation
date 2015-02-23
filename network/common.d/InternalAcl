@@ -1,0 +1,28 @@
+{
+    "Properties":{
+        "Tags":[
+            {
+                "Key":"Name",
+                "Value":"InternalAcl"
+            },
+            {
+                "Key":"ServiceComponent",
+                "Value":"Network"
+            },
+            {
+                "Key":"ServiceName",
+                "Value":"InternalAcl"
+            },
+            {
+                "Key":"ServicePhase",
+                "Value":{
+                    "Ref":"ServicePhase"
+                }
+            }
+        ],
+        "VpcId":{
+            "Ref":"Vpc"
+        }
+    },
+    "Type":"AWS::EC2::NetworkAcl"
+}

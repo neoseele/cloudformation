@@ -1,0 +1,25 @@
+{
+    "AWSTemplateFormatVersion":"2010-09-09",
+    "Description":"VPC Misc",
+    "Parameters":{
+        "InternalRouteTable":{
+            "Description":"",
+            "Type":"String"
+        },
+        "NatInstance":{
+            "Description":"",
+            "Type":"String"
+        },
+        "ServicePhase":{
+            "Description":"",
+            "Type":"String"
+        },
+        "Vpc":{
+            "Description":"",
+            "Type":"String"
+        }
+    },
+    "Resources":[
+        "InternalRoute"
+    ]
+}

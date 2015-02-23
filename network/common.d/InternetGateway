@@ -1,0 +1,25 @@
+{
+    "Properties":{
+        "Tags":[
+            {
+                "Key":"Name",
+                "Value":"InternetGateway"
+            },
+            {
+                "Key":"ServiceComponent",
+                "Value":"Network"
+            },
+            {
+                "Key":"ServiceName",
+                "Value":"InternetGateway"
+            },
+            {
+                "Key":"ServicePhase",
+                "Value":{
+                    "Ref":"ServicePhase"
+                }
+            }
+        ]
+    },
+    "Type":"AWS::EC2::InternetGateway"
+}

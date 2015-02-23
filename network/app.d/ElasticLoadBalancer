@@ -1,0 +1,37 @@
+{
+    "Properties":{
+        "CrossZone":"true",
+        "HealthCheck":{
+            "HealthyThreshold":"2",
+            "Interval":"10",
+            "Target":"HTTP:80/",
+            "Timeout":"5",
+            "UnhealthyThreshold":"5"
+        },
+        "LBCookieStickinessPolicy":[
+            {
+                "CookieExpirationPeriod":"30",
+                "PolicyName":"CookieBasedPolicy"
+            }
+        ],
+        "Listeners":[
+            {
+                "InstancePort":"80",
+                "LoadBalancerPort":"80",
+                "PolicyNames":[
+                    "CookieBasedPolicy"
+                ],
+                "Protocol":"HTTP"
+            }
+        ],
+        "SecurityGroups":[
+            {
+                "Ref":"LoadBalancerSecurityGroup"
+            }
+        ],
+        "Subnets":{
+            "Ref":"LoadBalancerSubnets"
+        }
+    },
+    "Type":"AWS::ElasticLoadBalancing::LoadBalancer"
+}

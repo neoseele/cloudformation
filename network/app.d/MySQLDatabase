@@ -1,0 +1,32 @@
+{
+    "Properties":{
+        "AllocatedStorage":{
+            "Ref":"DBAllocatedStorage"
+        },
+        "DBInstanceClass":{
+            "Ref":"DBInstanceClass"
+        },
+        "DBName":{
+            "Ref":"DBName"
+        },
+        "DBSubnetGroupName":{
+            "Ref":"DBSubnetGroup"
+        },
+        "Engine":"MySQL",
+        "MasterUserPassword":{
+            "Ref":"DBPassword"
+        },
+        "MasterUsername":{
+            "Ref":"DBUser"
+        },
+        "MultiAZ":{
+            "Ref":"MultiAZDatabase"
+        },
+        "VPCSecurityGroups":[
+            {
+                "Ref":"DBEC2SecurityGroup"
+            }
+        ]
+    },
+    "Type":"AWS::RDS::DBInstance"
+}

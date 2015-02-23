@@ -1,0 +1,11 @@
+{
+    "Properties":{
+        "NetworkAclId":{
+            "Ref":"ExternalAcl"
+        },
+        "SubnetId":{
+            "Ref":"ExternalSubnet"
+        }
+    },
+    "Type":"AWS::EC2::SubnetNetworkAclAssociation"
+}

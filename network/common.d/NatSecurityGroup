@@ -1,0 +1,47 @@
+{
+    "Properties":{
+        "GroupDescription":"NAT Security Group",
+        "SecurityGroupIngress":[
+            {
+                "CidrIp":{
+                    "Ref":"ServerAccess"
+                },
+                "FromPort":"22",
+                "IpProtocol":"tcp",
+                "ToPort":"22"
+            },
+            {
+                "CidrIp":{
+                    "Ref":"ServerAccess"
+                },
+                "FromPort":"3389",
+                "IpProtocol":"tcp",
+                "ToPort":"3389"
+            }
+        ],
+        "Tags":[
+            {
+                "Key":"Name",
+                "Value":"NatSecurityGroup"
+            },
+            {
+                "Key":"ServiceComponent",
+                "Value":"Network"
+            },
+            {
+                "Key":"ServiceName",
+                "Value":"NatSecurityGroup"
+            },
+            {
+                "Key":"ServicePhase",
+                "Value":{
+                    "Ref":"ServicePhase"
+                }
+            }
+        ],
+        "VpcId":{
+            "Ref":"Vpc"
+        }
+    },
+    "Type":"AWS::EC2::SecurityGroup"
+}

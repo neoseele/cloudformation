@@ -1,0 +1,11 @@
+{
+    "Properties":{
+        "RouteTableId":{
+            "Ref":"ExternalRouteTable"
+        },
+        "SubnetId":{
+            "Ref":"ExternalLoadBalancerSubnet"
+        }
+    },
+    "Type":"AWS::EC2::SubnetRouteTableAssociation"
+}

@@ -1,0 +1,23 @@
+{
+    "Properties":{
+        "GroupDescription":"Load Balancer Access",
+        "SecurityGroupIngress":[
+            {
+                "CidrIp":"0.0.0.0/0",
+                "FromPort":"80",
+                "IpProtocol":"tcp",
+                "ToPort":"80"
+            },
+            {
+                "CidrIp":"0.0.0.0/0",
+                "FromPort":"443",
+                "IpProtocol":"tcp",
+                "ToPort":"443"
+            }
+        ],
+        "VpcId":{
+            "Ref":"Vpc"
+        }
+    },
+    "Type":"AWS::EC2::SecurityGroup"
+}
